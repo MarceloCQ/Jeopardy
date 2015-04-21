@@ -8,13 +8,24 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <jsp:useBean id = "datos" scope= "session" class = "basededatos.DBHandler" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login - Jeopardy</title>
+        
+        <%
+            //Se saca el mensaje si es que lo hay
+            String mensaje = "";
+            if (request.getAttribute("mensaje") != null){
+                mensaje = "<p style='color:red'>" +  request.getAttribute("mensaje") + "</p>";
+                
+            }           
+        %>
     </head>
     <body>
     <center>
         <h1>Jeopardy</h1>
         <h2>Iniciar Sesión</h2>
+        <div><%=mensaje%></div>
         <form action="Controlador" method="POST">
             <input type="hidden" name="operacion" value="login"/>           
             <table border="0">

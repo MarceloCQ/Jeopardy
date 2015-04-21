@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-04-2015 a las 23:30:08
+-- Tiempo de generación: 22-04-2015 a las 01:04:21
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -65,7 +65,9 @@ CREATE TABLE IF NOT EXISTS `pistas` (
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `usuario` varchar(30) NOT NULL,
-  `contraseña` varchar(30) NOT NULL
+  `contraseña` varchar(30) NOT NULL,
+  `cambioContraseña` tinyint(1) NOT NULL DEFAULT '0',
+  `intentosFallidos` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
