@@ -25,7 +25,7 @@
     <center>
         <h1>Jeopardy</h1>
         <h2>Registro</h2>
-        <form action="ControladorRegistro" method="POST">    
+        <form onsubmit="return validarForma();" action="ControladorRegistro"  method="POST">    
             <input type="hidden" name="operacion" value="registrar"/> 
             <table border="0">
                 <tr>
@@ -35,11 +35,12 @@
                 </tr>
                 <tr>
                     <td>E-mail : </td>
-                    <td><input type="text" name="email" value="" /><br></td>
+                    <td><input type="text" oninput="verificarMail()" name="email" id="email" value="" /><br></td>
+                    <td><div id="emaildiv"></div></td>
                 </tr>
             </table>
             <br>
-            <input type="submit" value="Registrar" />
+            <input id="btnregistrar" type="submit" value="Registrar" />
         </form>
         <div id="mensaje"></div>
         <div><%=mensaje%></div>
