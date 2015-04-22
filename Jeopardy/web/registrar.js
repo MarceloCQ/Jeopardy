@@ -61,6 +61,7 @@ function desplegar(){
         boton.disabled = true;
     }
     
+<<<<<<< HEAD
 }
 
 function validarForma(){
@@ -88,3 +89,6 @@ function validarForma(){
      
      
 }
+=======
+}
+>>>>>>> origin/master
