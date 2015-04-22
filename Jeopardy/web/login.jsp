@@ -26,7 +26,7 @@
         <h1>Jeopardy</h1>
         <h2>Iniciar Sesión</h2>
         <div><%=mensaje%></div>
-        <form action="Controlador" method="POST">
+        <form action="ControladorLogIn" method="POST">
             <input type="hidden" name="operacion" value="login"/>           
             <table border="0">
                 <tr>

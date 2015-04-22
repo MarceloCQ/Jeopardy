@@ -32,24 +32,22 @@ public class DBHandler {
     }
     
     public static boolean verificarCuenta (String user, String password){ 
-        
         boolean exito = false;
-        try
-        {
+        
+        try {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT usuario, contraseña FROM usuarios where usuario='"+user+"' and contraseña='"+password+"'");
-            
             
             if (results.next()){
                 exito = true;
             } 
             
-            statement.close();
-                                   
+            statement.close();                       
         }
         catch (SQLException ex){
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return exito;
     }
     
@@ -72,8 +70,7 @@ public class DBHandler {
     }
     
     public static int getIntentosFallidos(String user){
-        try
-        {
+        try {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT intentosFallidos FROM usuarios where usuario='"+user+"'");
             int intentosFallidos = -1;

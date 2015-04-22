@@ -12,13 +12,11 @@ function verificarIgualdad(){
     if (original != repeticion){
         div.style = "color:red";
         div.innerHTML = "<img src='crossmark.png' height='10' width='10'>";
-        div.innerHTML += " La contraseña ingresada no es igual."
+        div.innerHTML += " La contraseña ingresada no es igual.";
     }
     else{
-        div.style = "color:green"
+        div.style = "color:green";
         div.innerHTML = "<img src='checkmark.png' height='10' width='10'>";
-        div.innerHTML += " La contraseña es igual."
+        div.innerHTML += " La contraseña es igual.";
     }
 }
-
-

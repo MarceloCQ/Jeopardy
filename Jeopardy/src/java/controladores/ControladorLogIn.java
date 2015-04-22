@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Marcelo
  */
-public class Controlador extends HttpServlet {
+public class ControladorLogIn extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,9 +49,7 @@ public class Controlador extends HttpServlet {
             //Se obtiene el user y password
             String user = request.getParameter("username");
             String password = request.getParameter("password");
-            
-            
-            
+ 
             //Sacar los intentos fallidos de la cuenta
             int intentosFallidos = DBHandler.getIntentosFallidos(user);
             
@@ -119,18 +117,12 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("mensaje", "Contraseña incorrecta");
                 url = "/cambioContrasena.jsp";
             }
-            
-            
-            
         }
         
         //Se redirecciona la pagina a la correcta
         ServletContext sc = this.getServletContext();
         RequestDispatcher rd = sc.getRequestDispatcher(url);
         rd.forward(request, response);
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
