@@ -25,7 +25,7 @@
         <h1>Jeopardy</h1>
         <h2>Cambiar Contraseña</h2>
         <div><%=mensaje%></div>
-        <form action="Controlador" method="POST">
+        <form action="ControladorLogIn" method="POST">
             <input type="hidden" name="operacion" value="cambioContra"/>           
             <table border="0">
                 <tr>

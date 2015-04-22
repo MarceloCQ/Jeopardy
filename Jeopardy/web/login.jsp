@@ -39,6 +39,8 @@
             <br>
             <input type="submit" value="Iniciar Sesión" />
         </form>
+        <br>
+        <a href="registrar.jsp"> Crear cuenta </a>
     </center>
     </body>
 </html>

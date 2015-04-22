@@ -53,6 +53,7 @@ public class DBHandler {
     
     public static Usuario getUsuario(String user){
         Statement statement;
+        
         try{
             statement = connection.createStatement();
             ResultSet resultado = statement.executeQuery("SELECT * FROM usuarios WHERE usuario='"+user+"'");
@@ -64,9 +65,7 @@ public class DBHandler {
         catch (SQLException ex){
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }
-        
-              
+        }        
     }
     
     public static int getIntentosFallidos(String user){
@@ -75,14 +74,13 @@ public class DBHandler {
             ResultSet results = statement.executeQuery("SELECT intentosFallidos FROM usuarios where usuario='"+user+"'");
             int intentosFallidos = -1;
             
-            if (results.next()){
+            if (results.next()) {
                 intentosFallidos = results.getInt(1);
             }
             
             statement.close();
             
-            return intentosFallidos;
-                                   
+            return intentosFallidos;                        
         }
         catch (SQLException ex){
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -117,10 +115,40 @@ public class DBHandler {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE Usuarios SET cambioContraseña='1' WHERE usuario='"+user+"'");
         }
+        catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static boolean validaUsuarioNuevo(String usuario) {
+        boolean existe = false;
+        
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT usuario FROM usuarios where usuario='"+usuario+"'");
+            
+            if (results.next()){
+                existe = true;
+            } 
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return !existe;
+    }
+    
+    public static void agregaUsuario(String usuario) {
+        try {
+            Statement statement = connection.createStatement();
+            int i = statement.executeUpdate("INSERT INTO usuarios (usuario, contraseña) VALUES ('" + usuario + "', 'pass')");
+            
+            statement.close();                       
+        }
         catch (SQLException ex){
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 }
