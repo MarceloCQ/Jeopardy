@@ -60,8 +60,6 @@ function desplegar(){
         div.innerHTML += " Este usuario no está disponible";
         boton.disabled = true;
     }
-    
-<<<<<<< HEAD
 }
 
 function validarForma(){
@@ -89,6 +87,3 @@ function validarForma(){
      
      
 }
-=======
-}
->>>>>>> origin/master
