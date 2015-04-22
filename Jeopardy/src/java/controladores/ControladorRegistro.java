@@ -6,10 +6,11 @@
 package controladores;
 
 import basededatos.DBHandler;
-import beans.EmailUtility;
+import utilities.EmailUtility;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -28,6 +29,24 @@ import javax.servlet.http.HttpSession;
 public class ControladorRegistro extends HttpServlet {
 
     /**
+     * Metodo que genera passwords
+     */
+    private String generarPassword() {
+        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        Random random = new Random();
+        int numCaracteres = random.nextInt((10 - 6) + 1) + 6;
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for (int i = 0; i < numCaracteres; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+        
+        return sb.toString();
+    }
+
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -38,21 +57,21 @@ public class ControladorRegistro extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, MessagingException {
-        
+
         String usuario = request.getParameter("username");
         String email = request.getParameter("email");
         String url = "/registrado.html";
-        
+
         if (DBHandler.validaUsuarioNuevo(usuario)) {
-            DBHandler.agregaUsuario(usuario);
-            EmailUtility.sendEmail("smtp.gmail.com", "587", "ecristerna.94@gmail.com", "eCm247.94", email, "JEOPARDY - Completa tu registro",
-                    "Tu contraseña provisional es: pass.\n\n Para completar tu registro, ingresa a la aplicación con esta contraseña y cámbiala por una propia.");
-        }
-        else {
+            String password = generarPassword();
+            DBHandler.agregaUsuario(usuario, password);
+            EmailUtility.sendEmail("smtp.gmail.com", "587", "jeopardystaff@gmail.com", "w3bisc00l", email, "JEOPARDY - Completa tu registro",
+                    "Tu registro ha sido exitoso.\n\n Usuario: " + usuario + "\n Contraseña: " + password + "\n\nSe te pedirá que cambies la contraseña una vez que ingreses al sitio por primera vez.");
+        } else {
             request.setAttribute("mensaje", "Nombre de usuario no disponible");
             url = "/registrar.jsp";
         }
-        
+
         //Se redirecciona la pagina a la correcta
         ServletContext sc = this.getServletContext();
         RequestDispatcher rd = sc.getRequestDispatcher(url);

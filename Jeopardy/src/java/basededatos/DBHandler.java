@@ -140,10 +140,10 @@ public class DBHandler {
         return !existe;
     }
     
-    public static void agregaUsuario(String usuario) {
+    public static void agregaUsuario(String usuario, String password) {
         try {
             Statement statement = connection.createStatement();
-            int i = statement.executeUpdate("INSERT INTO usuarios (usuario, contraseña) VALUES ('" + usuario + "', 'pass')");
+            int i = statement.executeUpdate("INSERT INTO usuarios (usuario, contraseña) VALUES ('" + usuario + "', '" + password +"')");
             
             statement.close();                       
         }
