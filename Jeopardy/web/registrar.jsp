@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registro - Jeopardy</title>
+        <script src="registrar.js"></script>
     </head>
     
         <%
@@ -24,11 +25,13 @@
     <center>
         <h1>Jeopardy</h1>
         <h2>Registro</h2>
-        <form action="ControladorRegistro" method="POST">          
+        <form action="ControladorRegistro" method="POST">    
+            <input type="hidden" name="operacion" value="registrar"/> 
             <table border="0">
                 <tr>
                     <td>Usuario : </td>
-                    <td><input type="text" oninput="verificarUsuarioNuevo()" name="username" value="" /><br></td>
+                    <td><input type="text" oninput="verificarUsuarioNuevo()" id="nombreUsuario" name="username" value="" /></td>
+                    <td><div id="igualono"></div></td>
                 </tr>
                 <tr>
                     <td>E-mail : </td>

@@ -120,7 +120,7 @@ public class DBHandler {
         }
     }
 
-    public static boolean validaUsuarioNuevo(String usuario) {
+    public static boolean usuarioExistente(String usuario) {
         boolean existe = false;
         
         try {
@@ -137,7 +137,7 @@ public class DBHandler {
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return !existe;
+        return existe;
     }
     
     public static void agregaUsuario(String usuario, String password) {

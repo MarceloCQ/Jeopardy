@@ -35,14 +35,14 @@ public class ControladorRegistro extends HttpServlet {
         char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         Random random = new Random();
         int numCaracteres = random.nextInt((10 - 6) + 1) + 6;
-        
+
         StringBuilder sb = new StringBuilder();
-        
+
         for (int i = 0; i < numCaracteres; i++) {
             char c = chars[random.nextInt(chars.length)];
             sb.append(c);
         }
-        
+
         return sb.toString();
     }
 
@@ -58,24 +58,44 @@ public class ControladorRegistro extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, MessagingException {
 
-        String usuario = request.getParameter("username");
-        String email = request.getParameter("email");
-        String url = "/registrado.html";
+        //Se saca la operacion que se quiere ejecutar
+        String op = request.getParameter("operacion");
 
-        if (DBHandler.validaUsuarioNuevo(usuario)) {
-            String password = generarPassword();
-            DBHandler.agregaUsuario(usuario, password);
-            EmailUtility.sendEmail("smtp.gmail.com", "587", "jeopardystaff@gmail.com", "w3bisc00l", email, "JEOPARDY - Completa tu registro",
-                    "Tu registro ha sido exitoso.\n\n Usuario: " + usuario + "\n Contraseña: " + password + "\n\nSe te pedirá que cambies la contraseña una vez que ingreses al sitio por primera vez.");
-        } else {
-            request.setAttribute("mensaje", "Nombre de usuario no disponible");
-            url = "/registrar.jsp";
+        if (op.equals("registrar")) {
+            String usuario = request.getParameter("username");
+            String email = request.getParameter("email");
+            String url = "/registrado.html";
+
+            if (!DBHandler.usuarioExistente(usuario)) {
+                String password = generarPassword();
+                DBHandler.agregaUsuario(usuario, password);
+                EmailUtility.sendEmail("smtp.gmail.com", "587", "jeopardystaff@gmail.com", "w3bisc00l", email, "JEOPARDY - Completa tu registro",
+                        "Tu registro ha sido exitoso.\n\n Usuario: " + usuario + "\n Contraseña: " + password + "\n\nSe te pedirá que cambies la contraseña una vez que ingreses al sitio por primera vez.");
+            } else {
+                request.setAttribute("mensaje", "Nombre de usuario no disponible");
+                url = "/registrar.jsp";
+            }
+            
+               //Se redirecciona la pagina a la correcta
+                ServletContext sc = this.getServletContext();
+                RequestDispatcher rd = sc.getRequestDispatcher(url);
+                rd.forward(request, response);
+            
+        }
+        
+        else if (op.equals("verificar")){
+            String userName = request.getParameter("userName");
+            String respuesta = "si";
+            if (DBHandler.usuarioExistente(userName)){
+                respuesta = "no";
+            }
+            
+            response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
         }
 
-        //Se redirecciona la pagina a la correcta
-        ServletContext sc = this.getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher(url);
-        rd.forward(request, response);
+     
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

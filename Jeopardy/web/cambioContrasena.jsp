@@ -29,7 +29,7 @@
             <input type="hidden" name="operacion" value="cambioContra"/>           
             <table border="0">
                 <tr>
-                    <td>Contraseña anterior: </td><td><input type="password" name="oldpassword" value="" /><br></td>
+                    <td>Contraseña anterior: </td><td><input type="password" name="oldpassword" value="" /></td>
                 </tr>
                 <tr>
                     <td>Contraseña nueva: </td><td><input id="original" oninput="verificarIgualdad()" type="password" name="newpassword" value="" /></td>
