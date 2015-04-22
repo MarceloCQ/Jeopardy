@@ -14,13 +14,11 @@ public class Usuario {
     private String usuario;
     private String contraseña;
     private boolean cambioContraseña;
-    private boolean bloqueada;
 
-    public Usuario(String usuario, String contraseña, boolean cambioContraseña, boolean bloqueada) {
+    public Usuario(String usuario, String contraseña, boolean cambioContraseña) {
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.cambioContraseña = cambioContraseña;
-        this.bloqueada = bloqueada;
     }
 
     public String getUsuario() {
@@ -47,16 +45,5 @@ public class Usuario {
         this.cambioContraseña = cambioContraseña;
     }
 
-    public boolean isBloqueada() {
-        return bloqueada;
-    }
 
-    public void setBloqueada(boolean bloqueada) {
-        this.bloqueada = bloqueada;
-    }
-    
-    
-    
-    
-    
 }

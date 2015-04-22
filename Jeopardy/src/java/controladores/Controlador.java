@@ -41,58 +41,87 @@ public class Controlador extends HttpServlet {
         //Se asigna la URL a la cual se va a redireccionar
         String url = "/login.jsp";
         
+        HttpSession session = request.getSession();
+        
         //Si la operacion es login
         if (op.equals("login")){
-            int intentosFallidos;
             
             //Se obtiene el user y password
             String user = request.getParameter("username");
             String password = request.getParameter("password");
             
-            HttpSession session = request.getSession();
             
-            //Si es la primera vez que se conecta, los intentos fallidos se ponen en cero
-            if (session.getAttribute("intentosFallidos") == null){
-                intentosFallidos = 0;
-                session.setAttribute("intentosFallidos", 0);               
+            
+            //Sacar los intentos fallidos de la cuenta
+            int intentosFallidos = DBHandler.getIntentosFallidos(user);
+            
+            //Si el usuario no se encontro
+            if (intentosFallidos == -1){
+                request.setAttribute("mensaje", "La cuenta que ingresaste no existe.");
             }
             else{
-                intentosFallidos = (Integer)session.getAttribute("intentosFallidos");
-            }
-            
-            //Si el usuaro inicio sesión correctamente
-            if (DBHandler.verificarCuenta(user, password)){
-                Usuario usuario = DBHandler.getUsuario(user);
-                
-                //Si la cuenta del usuario esta bloqueda
-                if (usuario.isBloqueada()){
-                    //Se regresa a la pagina de login con mensaje
-                    request.setAttribute("mensaje", "Tu cuenta esta bloqueda");
-                    url = "/login.jsp";
+                //Si los intentos fallidos son 3, es decir la cuenta está bloqueada
+                if (intentosFallidos == 3){
+                    request.setAttribute("mensaje", "La cuenta que ingresaste esta bloqueada.");
                 }
-                //Si no esta bloqueada
                 else{
-                    //Si el usuario ya cambio su contraseña
-                    if (usuario.isCambioContraseña()){
-                        //Se manda a la pagina principal
-                        url = "/inicio.jsp";
-                        //Se guarda el objeto en la sesion
-                        session.setAttribute("user", user);
+                    //Si los datos ingresados fueron correctos
+                    if (DBHandler.verificarCuenta(user, password)){
+                        
+                        Usuario usuario = DBHandler.getUsuario(user);
+                        DBHandler.actualizarIntentosFallidos(user, 0);
+                        
+                        //Checar si el usuario ya cambió su contraseña
+                        if (usuario.isCambioContraseña()){
+                            session.setAttribute("user", usuario);
+                            url = "/inicio.jsp";
+                        }
+                        else{
+                            session.setAttribute("userName", user);
+                            url = "/cambioContrasena.jsp";
+                        }
+
                     }
                     else{
-                        //Se manda al usuario a que cambie su contraseña
-                        url = "/cambioConstrasena.jsp";
+                        intentosFallidos++;
+                        //Si la cuenta se bloquea por pasar el numero de intentos fallidos
+                        if (intentosFallidos == 3){
+                            request.setAttribute("mensaje", "La cuenta que ingresaste se ha bloqueado.");
+
+                        }
+                        else{
+                            boolean singular = intentosFallidos == 2;
+                            request.setAttribute("mensaje", "Contraseña incorrecta, te queda" + (singular? " " : "n ") + (3 - intentosFallidos) + " intento" + (singular? "" : "s") +  " para que la cuenta se bloquee.");
+                        }
+                        
+                        DBHandler.actualizarIntentosFallidos(user, intentosFallidos);
                     }
                 }
-                               
             }
-            //Si el intento no fue existoso
-            else{
-                intentosFallidos++;
-                request.setAttribute("mensaje", "Intento fallido, tu cuenta está a punto de bloquearse, quedan" + intentosFallidos + " intentos.");
-                url = "/login.jsp";
-            }
+           
 
+        } else if (op.equals("cambioContra")){
+            
+            String nombreUsuario = (String) session.getAttribute("userName");
+            String passwordViejo = request.getParameter("oldpassword");
+            String passwordNuevo = request.getParameter("newpassword");
+            
+            if (DBHandler.verificarCuenta(nombreUsuario, passwordViejo)){
+                 DBHandler.cambiarContrasena(nombreUsuario, passwordNuevo);
+                 DBHandler.setCambioContra(nombreUsuario);
+                 
+                 Usuario usuario = DBHandler.getUsuario(nombreUsuario);
+                 
+                 session.setAttribute("user", usuario);
+                 url = "/inicio.jsp";
+            }
+            else{
+                request.setAttribute("mensaje", "Contraseña incorrecta");
+                url = "/cambioContrasena.jsp";
+            }
+            
+            
+            
         }
         
         //Se redirecciona la pagina a la correcta
