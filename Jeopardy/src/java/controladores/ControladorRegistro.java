@@ -86,6 +86,7 @@ public class ControladorRegistro extends HttpServlet {
         else if (op.equals("verificar")){
             String userName = request.getParameter("userName");
             String respuesta = "si";
+            
             if (DBHandler.usuarioExistente(userName)){
                 respuesta = "no";
             }
