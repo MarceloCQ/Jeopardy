@@ -5,12 +5,14 @@
  */
 package basededatos;
 
+import beans.Materia;
 import beans.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -143,7 +145,7 @@ public class DBHandler {
     public static void agregaUsuario(String usuario, String password) {
         try {
             Statement statement = connection.createStatement();
-            int i = statement.executeUpdate("INSERT INTO usuarios (usuario, contraseña) VALUES ('" + usuario + "', '" + password +"')");
+            statement.executeUpdate("INSERT INTO usuarios (usuario, contraseña) VALUES ('" + usuario + "', '" + password +"')");
             
             statement.close();                       
         }
@@ -151,4 +153,46 @@ public class DBHandler {
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static ArrayList<Materia> getMaterias(String hint){
+        ArrayList<Materia> materias = new ArrayList<Materia>();
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+            
+            if (hint.equals("")){
+                query = "SELECT * FROM materias ORDER BY nombre ASC";
+            }
+            else{
+                query = "SELECT * FROM `materias` WHERE nombre LIKE '"+hint+"%' ORDER BY nombre ASC ";
+            }
+                       
+            results = statement.executeQuery(query);
+            
+            while (results.next()){
+                materias.add(new Materia(results.getInt(1), results.getString(2)));
+            }
+                      
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return materias;
+    }
+    
+    public static void agregarMateria(String nombre){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO materias (nombre) VALUES ('" + nombre + "')");
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }

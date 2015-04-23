@@ -10,5 +10,50 @@ package beans;
  * @author Marcelo
  */
 public class Pista {
+    int id;
+    String pista;
+    String pregunta;
+    int puntos;
+
+    public Pista(int id, String pista, String pregunta, int puntos) {
+        this.id = id;
+        this.pista = pista;
+        this.pregunta = pregunta;
+        this.puntos = puntos;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getPista() {
+        return pista;
+    }
+
+    public void setPista(String pista) {
+        this.pista = pista;
+    }
+
+    public String getPregunta() {
+        return pregunta;
+    }
+
+    public void setPregunta(String pregunta) {
+        this.pregunta = pregunta;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+    
+    
     
 }

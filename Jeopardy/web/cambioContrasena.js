@@ -20,7 +20,3 @@ function verificarIgualdad(){
         div.innerHTML += " La contraseña es igual.";
     }
 }
-
-function verificarUsuarioNuevo() {
-    
-}
