@@ -195,4 +195,16 @@ public class DBHandler {
         }
     }
     
+    public static void eliminarMateria(int id){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM materias WHERE id =" + id);
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }

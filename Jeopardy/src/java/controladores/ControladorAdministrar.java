@@ -23,6 +23,23 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ControladorAdministrar extends HttpServlet {
 
+    private String obtenerMateriasenXML(String hint) {
+        String respuesta = "";
+
+        respuesta += "<?xml version='1.0' encoding='ISO-8859-1'?><Materias>";
+
+        ArrayList<Materia> materias = DBHandler.getMaterias(hint);
+
+        for (Materia m : materias) {
+            respuesta += "<Nombre>" + m.getNombre() + "</Nombre>";
+            respuesta += "<Id>" + m.getId() + "</Id>";
+        }
+
+        respuesta += "</Materias>";
+        
+        return respuesta;
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,67 +51,56 @@ public class ControladorAdministrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         //Se saca la operacion que se quiere ejecutar
         String op = request.getParameter("operacion");
-        
+
         String url = "/administrar.jsp";
-        
-        if (op.equals("inicializacion")){
+
+        if (op.equals("inicializacion")) {
             ArrayList<Materia> materias = DBHandler.getMaterias("");
             request.setAttribute("materias", materias);
-            
+
             //Se redirecciona la pagina a la correcta
             ServletContext sc = this.getServletContext();
             RequestDispatcher rd = sc.getRequestDispatcher(url);
             rd.forward(request, response);
-            
-        }
-        else if (op.equals("buscar")){
+
+        } else if (op.equals("buscar")) {
             String hint = request.getParameter("hint");
-            String respuesta = "";
-            
-            respuesta+= "<?xml version='1.0' encoding='ISO-8859-1'?><Materias>";
-            
-            ArrayList<Materia> materias = DBHandler.getMaterias(hint);
-            
-            for(Materia m : materias){
-                respuesta += "<Nombre>" + m.getNombre() + "</Nombre>";
-                respuesta += "<Id>" + m.getId() + "</Id>";
-            }
-            
-            respuesta += "</Materias>";
-            
+            String respuesta = obtenerMateriasenXML(hint);
+
             response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
             response.getWriter().write(respuesta);       // Write response body.
-        }
-        else if (op.equals("agregar")){
+            
+        } else if (op.equals("agregar")) {
             String nombre = request.getParameter("materiaNombre");
             DBHandler.agregarMateria(nombre);
+
+            String respuesta = obtenerMateriasenXML(nombre);
+
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
+
+        } else if (op.equals("eliminar")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String nombre = request.getParameter("materiaNombre");
             
-            String respuesta = "";
+            DBHandler.eliminarMateria(id);
             
-            respuesta+= "<?xml version='1.0' encoding='ISO-8859-1'?><Materias>";
-            
-            ArrayList<Materia> materias = DBHandler.getMaterias(nombre);
-            
-            for(Materia m : materias){
-                respuesta += "<Nombre>" + m.getNombre() + "</Nombre>";
-                respuesta += "<Id>" + m.getId() + "</Id>";
-            }
-            
-            respuesta += "</Materias>";
+            String respuesta = obtenerMateriasenXML(nombre);
             
             response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
             response.getWriter().write(respuesta);       // Write response body.
             
             
+            
+
         }
-        
-       
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
