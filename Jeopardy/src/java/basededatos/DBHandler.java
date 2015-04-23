@@ -207,4 +207,16 @@ public class DBHandler {
         }
     }
     
+    public static void editarMateria(int id, String nuevoNombre){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE materias SET nombre = '" + nuevoNombre + "' WHERE id =" + id);
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
