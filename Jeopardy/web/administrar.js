@@ -140,6 +140,13 @@ function materiaSeleccionada() {
     anchor.innerHTML = "Borrar";
     td3.appendChild(anchor);
     row2.appendChild(td3);
+    
+    var url = "ControladorAdministrar?operacion=buscarCategorias&hint=&id=" + id;
+    req = new XMLHttpRequest();
+    req.onload = poblarCategorias;
+    req.open("GET", url, true);
+    req.send();
+    
 }
 
 function eliminarMateria() {
@@ -220,6 +227,49 @@ function salvarModMateria(obj, input){
     
     req = new XMLHttpRequest();
     req.onload = cambiarOpcionesMateria;
+    req.open("GET", url, true);
+    req.send();
+}
+
+//FUNCIONES PARA CATEGORIAS
+function poblarCategorias(){
+    datos = req.responseXML;
+    categorias = datos.getElementsByTagName("Nombre");
+    ids = datos.getElementsByTagName("Id");
+    var lista = document.getElementById("listaCategorias");
+
+    lista.options.length = 0;
+    var i;
+    for (i = 0; i < categorias.length; ++i) {
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(categorias[i].textContent));
+        opt.value = ids[i].textContent;
+        lista.appendChild(opt);
+    }
+}
+
+function agregarCategoria(){
+    var texto = document.getElementById("categoria").value;
+    var lista = document.getElementById("listaMaterias");
+    var id = lista.options[lista.selectedIndex].value;
+    
+    if (confirm("¿Seguro que quieres agregar la categoria " + "\"" + texto + "\"?")) {
+        var url = "ControladorAdministrar?operacion=agregarCategoria&nombre=" + texto + "&idMateria="+id;
+        req = new XMLHttpRequest();
+        req.onload = poblarCategorias;
+        req.open("GET", url, true);
+        req.send();
+    }
+}
+
+function buscarCategorias(hint){
+    var lista = document.getElementById("listaMaterias");
+    var id = lista.options[lista.selectedIndex].value;
+    var url = "ControladorAdministrar?operacion=buscarCategorias&hint=" + hint + "&id=" + id;
+    var div = document.getElementById("categoriaSelecc");
+    div.innerHTML = "";
+    req = new XMLHttpRequest();
+    req.onload = poblarCategorias;
     req.open("GET", url, true);
     req.send();
 }

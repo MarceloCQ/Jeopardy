@@ -6,6 +6,7 @@
 package controladores;
 
 import basededatos.DBHandler;
+import beans.Categoria;
 import beans.Materia;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,6 +37,24 @@ public class ControladorAdministrar extends HttpServlet {
         }
 
         respuesta += "</Materias>";
+        
+        return respuesta;
+    }
+    
+    private String obtenerCategoriasenXML(String hint, int id) {
+        String respuesta = "";
+
+        respuesta += "<?xml version='1.0' encoding='ISO-8859-1'?><Categorias>";
+
+        ArrayList<Categoria> categorias = DBHandler.getCategorias(hint, id);
+
+        for (Categoria c : categorias) {
+            respuesta += "<Nombre>" + c.getNombre() + "</Nombre>";
+            respuesta += "<Id>" + c.getId() + "</Id>";
+        }
+
+        respuesta += "</Categorias>";
+        
         
         return respuesta;
     }
@@ -102,6 +121,27 @@ public class ControladorAdministrar extends HttpServlet {
             DBHandler.editarMateria(id, nombre);
             
             String respuesta = obtenerMateriasenXML(nombre);
+            
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
+            
+        } else if (op.equals("buscarCategorias")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            String hint = request.getParameter("hint");
+            
+            String respuesta = obtenerCategoriasenXML(hint, id);
+            
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
+            
+        } else if (op.equals("agregarCategoria")){
+            int idMateria = Integer.parseInt(request.getParameter("idMateria"));
+            String nombre = request.getParameter("nombre");
+            DBHandler.agregarCategoria(nombre, idMateria);
+            
+            String respuesta = obtenerCategoriasenXML(nombre, idMateria);
             
             response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?

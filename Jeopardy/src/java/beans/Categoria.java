@@ -14,12 +14,12 @@ import java.util.ArrayList;
 public class Categoria {
     int id;
     String nombre;
-    ArrayList<Pista> pistas;
+    int materiaID;
 
-    public Categoria(int id, String nombre, ArrayList<Pista> pistas) {
+    public Categoria(int id, String nombre, int materiaID) {
         this.id = id;
         this.nombre = nombre;
-        this.pistas = pistas;
+        this.materiaID = materiaID;
     }
 
     public int getId() {
@@ -38,12 +38,12 @@ public class Categoria {
         this.nombre = nombre;
     }
 
-    public ArrayList<Pista> getPistas() {
-        return pistas;
+    public int getMateriaID() {
+        return materiaID;
     }
 
-    public void setPistas(ArrayList<Pista> pistas) {
-        this.pistas = pistas;
+    public void setMateriaID(int materiaID) {
+        this.materiaID = materiaID;
     }
     
     

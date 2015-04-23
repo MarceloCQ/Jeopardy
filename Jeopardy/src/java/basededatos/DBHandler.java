@@ -5,6 +5,7 @@
  */
 package basededatos;
 
+import beans.Categoria;
 import beans.Materia;
 import beans.Usuario;
 import java.sql.Connection;
@@ -211,6 +212,48 @@ public class DBHandler {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE materias SET nombre = '" + nuevoNombre + "' WHERE id =" + id);
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static ArrayList<Categoria> getCategorias(String hint, int id){
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        System.out.println("Hint: " + hint);
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+            
+            if (hint.equals("")){
+                query = "SELECT * FROM categorias WHERE idMateria = "+ id +" ORDER BY nombre ASC";
+            }
+            else{
+                query = "SELECT * FROM categorias WHERE idMateria = " + id + " and nombre LIKE '"+hint+"%' ORDER BY nombre ASC ";
+            }
+                       
+            results = statement.executeQuery(query);
+            
+            while (results.next()){
+                categorias.add(new Categoria(results.getInt(1), results.getString(2), results.getInt(3)));
+            }
+                      
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return categorias;
+    }
+    
+    public static void agregarCategoria(String nombre, int id){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO categorias (nombre, idMateria) VALUES ('" + nombre + "', '" + id +"')");
             
             statement.close();                       
         }
