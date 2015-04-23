@@ -60,6 +60,7 @@ public class ControladorAdministrar extends HttpServlet {
             
             for(Materia m : materias){
                 respuesta += "<Nombre>" + m.getNombre() + "</Nombre>";
+                respuesta += "<Id>" + m.getId() + "</Id>";
             }
             
             respuesta += "</Materias>";
@@ -80,6 +81,7 @@ public class ControladorAdministrar extends HttpServlet {
             
             for(Materia m : materias){
                 respuesta += "<Nombre>" + m.getNombre() + "</Nombre>";
+                respuesta += "<Id>" + m.getId() + "</Id>";
             }
             
             respuesta += "</Materias>";

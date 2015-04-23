@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Administración de Pistas</title>
+        <link rel="StyleSheet" type="text/css" href="administrar.css"/>
         <script src="administrar.js"></script>
         <%
             ArrayList<Materia> materias = (ArrayList<Materia>) request.getAttribute("materias");
@@ -25,14 +26,15 @@
         Nombre: <input type="text" onkeyup="buscarMaterias(this.value)" id="materia" name="materiaNombre" value="" />
         <input type="button" onclick="agregarMateria()" value="Agregar materia" /><br><br>
 
-        <select style="width: 300px"id="listaMaterias" name="materias" size="5">
+        <select onchange="materiaSeleccionada()" style="width: 300px"id="listaMaterias" name="materias" size="5">
             <%
                 for (Materia m : materias) {
             %>
-            <option><%= m.getNombre()%></option>
+            <option value="<%= m.getId() %>"><%= m.getNombre()%></option>
             <%
                 }
             %>
-        </select>
+        </select><br><br>
+        <div id="materiaSelecc"></div>
     </body>
 </html>
