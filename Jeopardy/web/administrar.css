@@ -8,21 +8,45 @@ and open the template in the editor.
     Author     : Marcelo
 */
 
-#tablaMaterias{
+table{
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
 }
 
-#tablaMaterias td, #tablaMaterias th {
+td, th {
     font-size: 1em;
     border: 1px solid lightblue;
     padding: 3px 7px 2px 7px;
 }
 
-#tablaMaterias th {
+th {
     text-align: left;
     background-color: blue;
     padding-top: 5px;
     padding-bottom: 4px;
     color: white;
 }
+
+#conjunto {
+    overflow: hidden;
+}
+
+#seccionMaterias {
+    border: 1px solid black;
+    float : left;
+    margin-right: 35px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+#seccionCategorias {
+    border : 1px solid green;
+    overflow: hidden;
+    margin-right: 35px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+

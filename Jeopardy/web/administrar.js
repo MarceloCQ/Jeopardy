@@ -51,6 +51,8 @@ function buscarMaterias(hint) {
 
     var url = "ControladorAdministrar?operacion=buscar&hint=" + hint;
     var div = document.getElementById("materiaSelecc");
+    var divCat = document.getElementById("seccionCategorias");
+    divCat.style = "display:none";
     div.innerHTML = "";
     req = new XMLHttpRequest();
     req.onload = cambiarOpcionesMateria;
@@ -140,6 +142,9 @@ function materiaSeleccionada() {
     anchor.innerHTML = "Borrar";
     td3.appendChild(anchor);
     row2.appendChild(td3);
+    
+    var divCat = document.getElementById("seccionCategorias");
+    divCat.style = "display: block";
     
     var url = "ControladorAdministrar?operacion=buscarCategorias&hint=&id=" + id;
     req = new XMLHttpRequest();
@@ -272,4 +277,159 @@ function buscarCategorias(hint){
     req.onload = poblarCategorias;
     req.open("GET", url, true);
     req.send();
+}
+
+function categoriaSeleccionada(){
+    var lista = document.getElementById("listaCategorias");
+    var div = document.getElementById("categoriaSelecc");
+    var categoria = lista.options[lista.selectedIndex].text;
+    var id = lista.options[lista.selectedIndex].value;
+    div.innerHTML = "";
+
+    var tabla = document.createElement('table');
+    tabla.id = "tablaCategorias";
+    div.appendChild(tabla);
+
+    var tbdy = document.createElement('tbody');
+    tabla.appendChild(tbdy);
+
+    var row1 = document.createElement('tr');
+    tbdy.appendChild(row1);
+
+    var th1 = document.createElement('th');
+    th1.innerHTML = "Nombre";
+    row1.appendChild(th1);
+
+    var th2 = document.createElement('th');
+    th2.innerHTML = "Editar";
+    row1.appendChild(th2);
+
+    var th3 = document.createElement('th');
+    th3.innerHTML = "Borrar";
+    row1.appendChild(th3);
+
+    var row2 = document.createElement('tr');
+    tbdy.appendChild(row2);
+
+    var td1 = document.createElement('td');
+    td1.innerHTML = categoria;
+    td1.id = "tdNombreCategoria";
+    row2.appendChild(td1);
+
+    var td2 = document.createElement('td');
+    var anchor2 = document.createElement('a');
+    anchor2.onclick = editarCategoria;
+    anchor2.href = "#";
+    anchor2.innerHTML = "Editar";
+    td2.appendChild(anchor2);
+    row2.appendChild(td2);
+
+    var td3 = document.createElement('td');
+    var anchor = document.createElement('a');
+    anchor.onclick = eliminarCategoria;
+    anchor.href = "#";
+    anchor.innerHTML = "Borrar";
+    td3.appendChild(anchor);
+    row2.appendChild(td3);
+    
+    
+    //var divCat = document.getElementById("seccionPistas");
+    //divCat.style = "display: inline";
+    
+    //var url = "ControladorAdministrar?operacion=buscarCategorias&hint=&id=" + id;
+    //req = new XMLHttpRequest();
+    //req.onload = poblarCategorias;
+    //req.open("GET", url, true);
+    //req.send();
+}
+
+function editarCategoria(){
+    var obj = document.getElementById("tdNombreCategoria");
+    //Objeto que sirve para editar el valor en la pagina 
+    var input = null;
+    input = document.createElement("input");
+
+    if (obj.innerText)
+        input.value = obj.innerText;
+    else
+        input.value = obj.textContent
+
+    input.value = trim(input.value);
+
+    input.tabIndex = "0";
+
+    //a la caja INPUT se la asigna un tama�o un poco mayor que el texto a modificar
+    input.style.width = getTextWidth(input.value) + 30 + "px";
+
+    //Se remplaza el texto por el objeto INPUT
+    obj.replaceChild(input, obj.firstChild);
+
+    //Se selecciona el elemento y el texto a modificar
+    input.focus();
+    input.select();
+
+    //Asignaci�n de los 2 eventos que provocar�n la escritura en la base de datos
+
+    //La tecla Enter
+    input.onkeydown = function keyDown(event)
+    {
+
+        if (event.keyCode == 13)
+        {
+            salvarModCategoria(obj, input.value);
+            delete input;
+        }
+    };
+
+    //Salida de la INPUT
+    input.onblur = function salir()
+    {
+        salvarModCategoria(obj, input.value);
+        delete input;
+    };
+
+    return false;
+}
+
+function salvarModCategoria(obj, input){
+    var lista = document.getElementById("listaCategorias");
+    var listaM = document.getElementById("listaMaterias");
+    var id = lista.options[lista.selectedIndex].value;
+    var idM = listaM.options[listaM.selectedIndex].value;
+    
+ 
+    var url = "ControladorAdministrar?operacion=editarCategoria&id="+id+"&idMateria="+idM+"&nombre="+input;
+    
+    var categoriaNombre = document.getElementById("categoria");
+    
+    categoriaNombre.value = input;
+
+    obj.replaceChild(document.createTextNode(input), obj.firstChild);
+    
+    req = new XMLHttpRequest();
+    req.onload = poblarCategorias;
+    req.open("GET", url, true);
+    req.send();
+}
+
+function eliminarCategoria(){
+    var lista = document.getElementById("listaCategorias");
+    var listaM = document.getElementById("listaMaterias");
+    
+    var id = lista.options[lista.selectedIndex].value;
+    var idM = listaM.options[listaM.selectedIndex].value;
+    
+    var texto = document.getElementById("categoria").value;
+    
+    
+    var div = document.getElementById("categoriaSelecc");
+    div.innerHTML = "";
+    var url = "ControladorAdministrar?operacion=eliminarCategoria&id=" + id + "&idMateria="+idM+"&nombre=" + texto;
+    req = new XMLHttpRequest();
+    req.onload = poblarCategorias;
+    req.open("GET", url, true);
+    req.send();
+
+    return false;
+    
 }

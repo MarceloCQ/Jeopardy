@@ -147,6 +147,32 @@ public class ControladorAdministrar extends HttpServlet {
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
             response.getWriter().write(respuesta);       // Write response body.
             
+        } else if (op.equals("editarCategoria")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            int idMateria = Integer.parseInt(request.getParameter("idMateria"));
+            String nombre = request.getParameter("nombre");
+            
+            DBHandler.editarCategoria(id, nombre);
+            
+            String respuesta = obtenerCategoriasenXML(nombre, idMateria);
+            
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
+            
+        } else if (op.equals("eliminarCategoria")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            int idMateria = Integer.parseInt(request.getParameter("idMateria"));
+            String nombre = request.getParameter("nombre");
+            
+            DBHandler.eliminarCategoria(id);
+            
+            String respuesta = obtenerCategoriasenXML(nombre, idMateria);
+            
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
+            
         }
         
 

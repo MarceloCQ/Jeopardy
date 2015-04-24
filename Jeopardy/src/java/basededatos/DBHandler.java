@@ -262,4 +262,29 @@ public class DBHandler {
         }
     }
     
+    public static void editarCategoria(int id, String nuevoNombre){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE categorias SET nombre = '" + nuevoNombre + "' WHERE id =" + id);
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void eliminarCategoria(int id){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM categorias WHERE id =" + id);
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 }
