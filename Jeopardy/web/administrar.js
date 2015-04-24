@@ -67,7 +67,7 @@ function cambiarOpcionesMateria() {
     ids = datos.getElementsByTagName("Id");
     var lista = document.getElementById("listaMaterias");
 
- //   div.innerHTML = "";
+    //   div.innerHTML = "";
     lista.options.length = 0;
     var i;
     for (i = 0; i < materias.length; ++i) {
@@ -142,16 +142,16 @@ function materiaSeleccionada() {
     anchor.innerHTML = "Borrar";
     td3.appendChild(anchor);
     row2.appendChild(td3);
-    
+
     var divCat = document.getElementById("seccionCategorias");
     divCat.style = "display: block";
-    
+
     var url = "ControladorAdministrar?operacion=buscarCategorias&hint=&id=" + id;
     req = new XMLHttpRequest();
     req.onload = poblarCategorias;
     req.open("GET", url, true);
     req.send();
-    
+
 }
 
 function eliminarMateria() {
@@ -217,19 +217,19 @@ function editarMateria() {
     return false;
 }
 
-function salvarModMateria(obj, input){
-    
+function salvarModMateria(obj, input) {
+
     var lista = document.getElementById("listaMaterias");
     var id = lista.options[lista.selectedIndex].value;
- 
-    var url = "ControladorAdministrar?operacion=editarMateria&id="+id+"&nombre="+input;
-    
+
+    var url = "ControladorAdministrar?operacion=editarMateria&id=" + id + "&nombre=" + input;
+
     var materiaNombre = document.getElementById("materia");
-    
+
     materiaNombre.value = input;
 
     obj.replaceChild(document.createTextNode(input), obj.firstChild);
-    
+
     req = new XMLHttpRequest();
     req.onload = cambiarOpcionesMateria;
     req.open("GET", url, true);
@@ -237,7 +237,7 @@ function salvarModMateria(obj, input){
 }
 
 //FUNCIONES PARA CATEGORIAS
-function poblarCategorias(){
+function poblarCategorias() {
     datos = req.responseXML;
     categorias = datos.getElementsByTagName("Nombre");
     ids = datos.getElementsByTagName("Id");
@@ -253,13 +253,13 @@ function poblarCategorias(){
     }
 }
 
-function agregarCategoria(){
+function agregarCategoria() {
     var texto = document.getElementById("categoria").value;
     var lista = document.getElementById("listaMaterias");
     var id = lista.options[lista.selectedIndex].value;
-    
+
     if (confirm("¿Seguro que quieres agregar la categoria " + "\"" + texto + "\"?")) {
-        var url = "ControladorAdministrar?operacion=agregarCategoria&nombre=" + texto + "&idMateria="+id;
+        var url = "ControladorAdministrar?operacion=agregarCategoria&nombre=" + texto + "&idMateria=" + id;
         req = new XMLHttpRequest();
         req.onload = poblarCategorias;
         req.open("GET", url, true);
@@ -267,7 +267,7 @@ function agregarCategoria(){
     }
 }
 
-function buscarCategorias(hint){
+function buscarCategorias(hint) {
     var lista = document.getElementById("listaMaterias");
     var id = lista.options[lista.selectedIndex].value;
     var url = "ControladorAdministrar?operacion=buscarCategorias&hint=" + hint + "&id=" + id;
@@ -279,7 +279,7 @@ function buscarCategorias(hint){
     req.send();
 }
 
-function categoriaSeleccionada(){
+function categoriaSeleccionada() {
     var lista = document.getElementById("listaCategorias");
     var div = document.getElementById("categoriaSelecc");
     var categoria = lista.options[lista.selectedIndex].text;
@@ -331,11 +331,11 @@ function categoriaSeleccionada(){
     anchor.innerHTML = "Borrar";
     td3.appendChild(anchor);
     row2.appendChild(td3);
-    
-    
+
+
     //var divCat = document.getElementById("seccionPistas");
     //divCat.style = "display: inline";
-    
+
     //var url = "ControladorAdministrar?operacion=buscarCategorias&hint=&id=" + id;
     //req = new XMLHttpRequest();
     //req.onload = poblarCategorias;
@@ -343,7 +343,7 @@ function categoriaSeleccionada(){
     //req.send();
 }
 
-function editarCategoria(){
+function editarCategoria() {
     var obj = document.getElementById("tdNombreCategoria");
     //Objeto que sirve para editar el valor en la pagina 
     var input = null;
@@ -391,45 +391,80 @@ function editarCategoria(){
     return false;
 }
 
-function salvarModCategoria(obj, input){
+function salvarModCategoria(obj, input) {
     var lista = document.getElementById("listaCategorias");
     var listaM = document.getElementById("listaMaterias");
     var id = lista.options[lista.selectedIndex].value;
     var idM = listaM.options[listaM.selectedIndex].value;
-    
- 
-    var url = "ControladorAdministrar?operacion=editarCategoria&id="+id+"&idMateria="+idM+"&nombre="+input;
-    
+
+
+    var url = "ControladorAdministrar?operacion=editarCategoria&id=" + id + "&idMateria=" + idM + "&nombre=" + input;
+
     var categoriaNombre = document.getElementById("categoria");
-    
+
     categoriaNombre.value = input;
 
     obj.replaceChild(document.createTextNode(input), obj.firstChild);
-    
+
     req = new XMLHttpRequest();
     req.onload = poblarCategorias;
     req.open("GET", url, true);
     req.send();
 }
 
-function eliminarCategoria(){
+function eliminarCategoria() {
     var lista = document.getElementById("listaCategorias");
     var listaM = document.getElementById("listaMaterias");
-    
+
     var id = lista.options[lista.selectedIndex].value;
     var idM = listaM.options[listaM.selectedIndex].value;
-    
+
     var texto = document.getElementById("categoria").value;
-    
-    
+
+
     var div = document.getElementById("categoriaSelecc");
     div.innerHTML = "";
-    var url = "ControladorAdministrar?operacion=eliminarCategoria&id=" + id + "&idMateria="+idM+"&nombre=" + texto;
+    var url = "ControladorAdministrar?operacion=eliminarCategoria&id=" + id + "&idMateria=" + idM + "&nombre=" + texto;
     req = new XMLHttpRequest();
     req.onload = poblarCategorias;
     req.open("GET", url, true);
     req.send();
 
     return false;
-    
+
+}
+
+function agregarPreguntas() {
+    var div = document.getElementById("divDesglose");
+    var div2 = document.getElementById("buscarPistas");
+
+    if (div.style.display == "block") {
+        var pregunta = document.getElementById("pregunta").value;
+        var respuesta = document.getElementById("respuesta").value;
+        var puntos = (document.getElementById("puntos").selectedIndex + 1) * 100;
+        var lista = document.getElementById("listaCategorias");
+        var idCategoria = lista.options[lista.selectedIndex].value;
+        
+        if (pregunta == "" || respuesta == ""){
+            alert("Favor de llenar todos los campos");
+        }
+        else{
+            if (confirm("¿Seguro que quieres agregar la pregunta " + "\"" + pregunta + "\"?")) {
+            var url = "ControladorAdministrar?operacion=agregarPregunta&pregunta=" + pregunta + "&respuesta=" + respuesta + "&puntos=" + puntos + "&idCategoria="+idCategoria;
+            req = new XMLHttpRequest();
+          //  req.onload = poblarCategorias;
+            req.open("GET", url, true);
+            req.send();
+    }
+        }
+        
+    } else {
+        div.style = "display:block";
+        div2.style = "display:none";
+    }
+
+
+
+
+
 }

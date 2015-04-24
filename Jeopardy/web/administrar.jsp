@@ -46,10 +46,30 @@
                 </select><br><br>
                 <div id="categoriaSelecc"></div>
             </div>
-                <div id="seccionPistas">
-                    <h2>Pistas</h2>
-                    
+            <div id="seccionPistas">
+                <h2>Preguntas</h2>
+                Buscar: <input type="text"  onkeyup="buscarPreguntas(this.value)" id="pregunta" value="" />
+                <div id="divDesglose" style="display:none">
+                    <br>
+                    Respuesta: <textarea rows="3" cols="20"  id="respuesta"/></textarea><br><br>
+                    Puntos: <select id="puntos">
+                        <option>100</option>
+                        <option>200</option>
+                        <option>300</option>
+                        <option>400</option>
+                        <option>500</option>
+                    </select><br><br>                     
                 </div>
+
+                <input type="button" onclick="agregarPreguntas()" value="Agregar pregunta" />
+                <div id="buscarPistas">
+                    <br>
+                    <select onchange="categoriaSeleccionada()" style="width: 300px" id="listaPistas" size="5">                      
+                    </select>
+                    <div id="pistaSelecc"></div>
+                </div>
+
+            </div>
 
         </div>
 

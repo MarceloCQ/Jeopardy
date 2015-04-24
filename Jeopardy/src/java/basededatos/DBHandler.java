@@ -287,5 +287,17 @@ public class DBHandler {
         }
     }
     
+    public static void agregarPregunta(String pregunta, String pista, int puntos, int idCategoria){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO pistas (pista, pregunta, puntos, idCategoria) VALUES ('" + pista + "', '" + pregunta +"', '" + puntos +"', '" + idCategoria +"')");
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
 }

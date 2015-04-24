@@ -173,6 +173,15 @@ public class ControladorAdministrar extends HttpServlet {
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
             response.getWriter().write(respuesta);       // Write response body.
             
+        } else if (op.equals("agregarPregunta")){
+            String pregunta = request.getParameter("pregunta");
+            String respuesta = request.getParameter("respuesta");
+            int puntos = Integer.parseInt(request.getParameter("puntos"));
+            int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
+            
+            DBHandler.agregarPregunta(pregunta, respuesta, puntos, idCategoria);
+            
+            
         }
         
 
