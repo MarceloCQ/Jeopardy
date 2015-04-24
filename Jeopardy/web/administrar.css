@@ -43,10 +43,23 @@ th {
 #seccionCategorias {
     border : 1px solid green;
     overflow: hidden;
+    float: left;
     margin-right: 35px;
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
 }
+
+#seccionPistas {
+    border : 1px solid green;
+    overflow: hidden;
+    float: left;
+    margin-right: 35px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+
 
 

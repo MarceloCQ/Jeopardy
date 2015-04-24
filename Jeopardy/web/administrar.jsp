@@ -47,6 +47,7 @@
                 <div id="categoriaSelecc"></div>
             </div>
                 <div id="seccionPistas">
+                    <h2>Pistas</h2>
                     
                 </div>
 

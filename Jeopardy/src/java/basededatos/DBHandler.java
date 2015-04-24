@@ -200,6 +200,7 @@ public class DBHandler {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM materias WHERE id =" + id);
+            statement.executeUpdate("DELETE FROM categorias WHERE idMateria =" + id);
             
             statement.close();                       
         }
