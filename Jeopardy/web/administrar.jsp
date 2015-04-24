@@ -35,7 +35,25 @@
                         }
                     %>
                 </select><br><br>
-                <div id="materiaSelecc"></div>
+                <div style="display: none" id="materiaSelecc">
+                    <table border="1" id="tablaMaterias">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Editar</th>
+                                <th>Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="tdNombreMateria"></td>
+                                <td><a onclick="editarMateria()" href="#" >Editar</a></td>
+                                <td><a onclick="eliminarMateria()" href="#" >Eliminar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
             <div id="seccionCategorias" style="display:none">
                 <h2>Categorias</h2>
@@ -44,9 +62,26 @@
 
                 <select onchange="categoriaSeleccionada()" style="width: 300px" id="listaCategorias" size="5">         
                 </select><br><br>
-                <div id="categoriaSelecc"></div>
+                <div style="display: none" id="categoriaSelecc">
+                    <table border="1" id="tablaCategorias">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Editar</th>
+                                <th>Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="tdNombreCategoria"></td>
+                                <td><a onclick="editarCategoria()" href="#" >Editar</a></td>
+                                <td><a onclick="eliminarCategoria()" href="#" >Eliminar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div id="seccionPistas">
+            <div id="seccionPistas" style="display: none">
                 <h2>Preguntas</h2>
                 Buscar: <input type="text"  onkeyup="buscarPreguntas(this.value)" id="pregunta" value="" />
                 <div id="divDesglose" style="display:none">
@@ -64,9 +99,31 @@
                 <input type="button" onclick="agregarPreguntas()" value="Agregar pregunta" />
                 <div id="buscarPistas">
                     <br>
-                    <select onchange="categoriaSeleccionada()" style="width: 300px" id="listaPistas" size="5">                      
-                    </select>
-                    <div id="pistaSelecc"></div>
+                    <select onchange="preguntaSeleccionada()" style="width: 300px" id="listaPistas" size="5">                      
+                    </select><br><br>
+                    <div style="display: none" id="pistaSelecc">
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Pregunta</th>
+                                    <th>Pista</th>
+                                    <th>Puntos</th>
+                                    <th>Editar</th>
+                                    <th>Borrar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="width:100px" id="tdPregunta"></td>
+                                    <td style="width:150px" id ="tdPista"></td>
+                                    <td style="text-align: center" id ="tdPuntos"></td>
+                                    <td ><a onclick="editarPregunta()" href="#" >Editar</a></td>
+                                    <td><a onclick="eliminarPregunta()" href="#" >Eliminar</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
 
             </div>

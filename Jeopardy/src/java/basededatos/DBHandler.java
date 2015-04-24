@@ -7,6 +7,7 @@ package basededatos;
 
 import beans.Categoria;
 import beans.Materia;
+import beans.Pista;
 import beans.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -287,10 +288,69 @@ public class DBHandler {
         }
     }
     
+    public static ArrayList<Pista> getPreguntas(String hint, int id){
+        ArrayList<Pista> preguntas = new ArrayList<Pista>();
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+            
+            if (hint.equals("")){
+                query = "SELECT * FROM pistas WHERE idCategoria = "+ id +" ORDER BY pregunta ASC";
+            }
+            else{
+                query = "SELECT * FROM pistas WHERE idCategoria = " + id + " and pregunta LIKE '"+hint+"%' ORDER BY pregunta ASC ";
+            }
+                       
+            results = statement.executeQuery(query);
+            
+            while (results.next()){
+                preguntas.add(new Pista(results.getInt(1), results.getString(2), results.getString(3), results.getInt(4), results.getInt(5)));
+            }
+                      
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return preguntas;
+    }
+    
     public static void agregarPregunta(String pregunta, String pista, int puntos, int idCategoria){
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO pistas (pista, pregunta, puntos, idCategoria) VALUES ('" + pista + "', '" + pregunta +"', '" + puntos +"', '" + idCategoria +"')");
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static Pista obtenerPista(int id){
+        Pista pista = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM pistas where id = " + id);
+            
+            if (results.next()){
+                pista = new Pista(results.getInt(1), results.getString(2), results.getString(3), results.getInt(4), results.getInt(5));
+            } 
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pista;
+    }
+    
+    public static void eliminarPista(int id){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM pistas WHERE id =" + id);
             
             statement.close();                       
         }

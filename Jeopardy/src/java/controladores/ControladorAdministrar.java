@@ -8,6 +8,7 @@ package controladores;
 import basededatos.DBHandler;
 import beans.Categoria;
 import beans.Materia;
+import beans.Pista;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -58,6 +59,25 @@ public class ControladorAdministrar extends HttpServlet {
         
         return respuesta;
     }
+    
+    private String obtenerPreguntasenXML(String hint, int id) {
+        String respuesta = "";
+
+        respuesta += "<?xml version='1.0' encoding='ISO-8859-1'?><Preguntas>";
+
+        ArrayList<Pista> preguntas = DBHandler.getPreguntas(hint, id);
+
+        for (Pista p : preguntas) {
+            respuesta += "<Nombre>" + p.getPregunta() + "</Nombre>";
+            respuesta += "<Id>" + p.getId() + "</Id>";
+        }
+
+        respuesta += "</Preguntas>";
+        
+        
+        return respuesta;
+    }
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -97,7 +117,7 @@ public class ControladorAdministrar extends HttpServlet {
             String nombre = request.getParameter("materiaNombre");
             DBHandler.agregarMateria(nombre);
 
-            String respuesta = obtenerMateriasenXML(nombre);
+            String respuesta = obtenerMateriasenXML("");
 
             response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
@@ -105,11 +125,10 @@ public class ControladorAdministrar extends HttpServlet {
 
         } else if (op.equals("eliminar")) {
             int id = Integer.parseInt(request.getParameter("id"));
-            String nombre = request.getParameter("materiaNombre");
             
             DBHandler.eliminarMateria(id);
             
-            String respuesta = obtenerMateriasenXML(nombre);
+            String respuesta = obtenerMateriasenXML("");
             
             response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
@@ -141,7 +160,7 @@ public class ControladorAdministrar extends HttpServlet {
             String nombre = request.getParameter("nombre");
             DBHandler.agregarCategoria(nombre, idMateria);
             
-            String respuesta = obtenerCategoriasenXML(nombre, idMateria);
+            String respuesta = obtenerCategoriasenXML("", idMateria);
             
             response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
@@ -163,11 +182,10 @@ public class ControladorAdministrar extends HttpServlet {
         } else if (op.equals("eliminarCategoria")){
             int id = Integer.parseInt(request.getParameter("id"));
             int idMateria = Integer.parseInt(request.getParameter("idMateria"));
-            String nombre = request.getParameter("nombre");
             
             DBHandler.eliminarCategoria(id);
             
-            String respuesta = obtenerCategoriasenXML(nombre, idMateria);
+            String respuesta = obtenerCategoriasenXML("", idMateria);
             
             response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
@@ -181,7 +199,49 @@ public class ControladorAdministrar extends HttpServlet {
             
             DBHandler.agregarPregunta(pregunta, respuesta, puntos, idCategoria);
             
+            String respuesta2 = obtenerPreguntasenXML("", idCategoria);
             
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta2);       // Write response body.
+            
+            
+        } else if (op.equals("buscarPreguntas")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            String hint = request.getParameter("hint");
+            
+            String respuesta = obtenerPreguntasenXML(hint, id);
+            
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
+            
+        } else if (op.equals("obtenerPregunta")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            String respuesta = "";
+            Pista pista = DBHandler.obtenerPista(id);
+            
+            respuesta += "<?xml version='1.0' encoding='ISO-8859-1'?><Pista>";
+            respuesta += "<Pregunta>" + pista.getPregunta() + "</Pregunta>";
+            respuesta += "<Respuesta>" + pista.getPista() + "</Respuesta>";
+            respuesta += "<Puntos>" + pista.getPuntos() + "</Puntos>";
+            respuesta += "</Pista>";
+            
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
+            
+        } else if (op.equals("eliminarPregunta")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
+            
+            DBHandler.eliminarPista(id);
+            
+            String respuesta = obtenerPreguntasenXML("", idCategoria);
+            
+            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+            response.getWriter().write(respuesta);       // Write response body.
         }
         
 

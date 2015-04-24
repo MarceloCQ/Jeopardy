@@ -14,12 +14,14 @@ public class Pista {
     String pista;
     String pregunta;
     int puntos;
+    int idCategoria;
 
-    public Pista(int id, String pista, String pregunta, int puntos) {
+    public Pista(int id, String pista, String pregunta, int puntos, int idCategoria) {
         this.id = id;
         this.pista = pista;
         this.pregunta = pregunta;
         this.puntos = puntos;
+        this.idCategoria = idCategoria;
     }
 
     public int getId() {
@@ -53,6 +55,16 @@ public class Pista {
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+    
+    
     
     
     
