@@ -187,16 +187,17 @@ function salvarModMateria(obj, input) {
 
     var url = "ControladorAdministrar?operacion=editarMateria&id=" + id + "&nombre=" + input;
 
-    var materiaNombre = document.getElementById("materia");
-
-    materiaNombre.value = input;
-
     obj.replaceChild(document.createTextNode(input), obj.firstChild);
 
     req = new XMLHttpRequest();
-    req.onload = cambiarOpcionesMateria;
+    req.onload = materiaEditada;
     req.open("GET", url, true);
     req.send();
+}
+
+function materiaEditada(){
+   var lista = document.getElementById("listaMaterias");
+    lista.options[lista.selectedIndex].innerHTML = document.getElementById("tdNombreMateria").innerHTML; 
 }
 
 //FUNCIONES PARA CATEGORIAS
@@ -328,16 +329,17 @@ function salvarModCategoria(obj, input) {
 
     var url = "ControladorAdministrar?operacion=editarCategoria&id=" + id + "&idMateria=" + idM + "&nombre=" + input;
 
-    var categoriaNombre = document.getElementById("categoria");
-
-    categoriaNombre.value = input;
-
     obj.replaceChild(document.createTextNode(input), obj.firstChild);
 
     req = new XMLHttpRequest();
-    req.onload = poblarCategorias;
+    req.onload = categoriaEditada;
     req.open("GET", url, true);
     req.send();
+}
+
+function categoriaEditada(){
+    var lista = document.getElementById("listaCategorias");
+    lista.options[lista.selectedIndex].innerHTML = document.getElementById("tdNombreCategoria").innerHTML; 
 }
 
 function eliminarCategoria() {
@@ -422,8 +424,7 @@ function buscarPreguntas(hint) {
     var lista = document.getElementById("listaCategorias");
     var id = lista.options[lista.selectedIndex].value;
     var url = "ControladorAdministrar?operacion=buscarPreguntas&hint=" + hint + "&id=" + id;
-    var div = document.getElementById("pistaSelecc");
-    div.innerHTML = "";
+    document.getElementById("pistaSelecc").style = "display: none";
     req = new XMLHttpRequest();
     req.onload = poblarPistas;
     req.open("GET", url, true);
@@ -562,7 +563,6 @@ function editarPregunta(){
         if (event.keyCode == 13)
         {
             salvarModPregunta(objPregunta, inputPregunta.value, objRespuesta, inputRespuesta.value, objPuntos, (inputPuntos.selectedIndex + 1) * 100);
-            delete input;
         }
     };
 
@@ -573,25 +573,24 @@ function editarPregunta(){
 
 function salvarModPregunta(objPr, inputPr, objResp, inputResp, objPuntos, inputPuntos) {
     var lista = document.getElementById("listaPistas");
-    var listaC = document.getElementById("listaCategorias");
     var id = lista.options[lista.selectedIndex].value;
-    var idC = listaC.options[listaC.selectedIndex].value;
 
-
-    var url = "ControladorAdministrar?operacion=editarPregunta&id=" + id + "&idCategoria=" + idC + "&pregunta=" + inputPr + "&respuesta=" + inputResp + "&puntos=" + puntos;
-
-    var categoriaNombre = document.getElementById("pregunta");
-    categoriaNombre.value = inputPr;
+    var url = "ControladorAdministrar?operacion=editarPregunta&id=" + id + "&pregunta=" + inputPr + "&respuesta=" + inputResp + "&puntos=" + inputPuntos;
 
     objPr.replaceChild(document.createTextNode(inputPr), objPr.firstChild);
     objResp.replaceChild(document.createTextNode(inputResp), objResp.firstChild);
     objPuntos.replaceChild(document.createTextNode(inputPuntos), objPuntos.firstChild);
 
 
-//    req = new XMLHttpRequest();
-  //  req.onload = poblarPistas;
-    //req.open("GET", url, true);
-    //req.send();
+    req = new XMLHttpRequest();
+    req.onload = preguntaEditada;
+    req.open("GET", url, true);
+    req.send();
+}
+
+function preguntaEditada(){
+    var lista = document.getElementById("listaPistas");
+    lista.options[lista.selectedIndex].innerHTML = document.getElementById("tdPregunta").innerHTML;
 }
 
 function removeOptions(selectbox)

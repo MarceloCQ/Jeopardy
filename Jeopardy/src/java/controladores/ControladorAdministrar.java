@@ -139,11 +139,6 @@ public class ControladorAdministrar extends HttpServlet {
             String nombre = request.getParameter("nombre");
             DBHandler.editarMateria(id, nombre);
             
-            String respuesta = obtenerMateriasenXML(nombre);
-            
-            response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-            response.getWriter().write(respuesta);       // Write response body.
             
         } else if (op.equals("buscarCategorias")){
             int id = Integer.parseInt(request.getParameter("id"));
@@ -242,6 +237,14 @@ public class ControladorAdministrar extends HttpServlet {
             response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
             response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
             response.getWriter().write(respuesta);       // Write response body.
+        } else if (op.equals("editarPregunta")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            String pregunta = request.getParameter("pregunta");
+            String respuesta = request.getParameter("respuesta");
+            int puntos = Integer.parseInt(request.getParameter("puntos"));
+            
+            DBHandler.editarPista(id, pregunta, respuesta, puntos);
+            
         }
         
 

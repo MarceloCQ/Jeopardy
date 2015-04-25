@@ -359,5 +359,17 @@ public class DBHandler {
         }
     }
     
+    public static void editarPista(int id, String pregunta, String respuesta, int puntos){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE pistas SET pista = '" + respuesta + "', pregunta = '" + pregunta + "', puntos = "+ puntos + " WHERE id =" + id);
+            
+            statement.close();                       
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
 }
