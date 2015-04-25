@@ -33,6 +33,55 @@ html, body{
     width: 20%;
     height: 100%;
     float: right;
-    background: red;
+    background: #60607c;    
         
 }
+
+#header {
+    height : 5%;
+    line-height: 5%;
+    text-align: center;
+}
+
+#preguntas {
+    height: 95%;
+}
+
+table{
+    text-align: center;
+    width: 100%; 
+    background-color: #003366;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+td, th{
+    border: 5px solid black;
+}
+
+th{
+    color: white;
+    height: 10%;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+td{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 80px;
+    color:  #cc9933;
+    height: 18%;
+    
+}
+
+td:hover {
+    color:  white;
+    cursor: pointer;
+}
+
+h1 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    
+}
+
+

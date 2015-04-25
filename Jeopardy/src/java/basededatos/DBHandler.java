@@ -209,6 +209,23 @@ public class DBHandler {
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static Materia obtenerMateria(int id) {
+        Materia materia = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM materias where id = " + id);
+
+            if (results.next()) {
+                materia = new Materia(results.getInt(1), results.getString(2));
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return materia;
+    }
 
     public static ArrayList<Categoria> getCategorias(String hint, int id) {
         ArrayList<Categoria> categorias = new ArrayList<Categoria>();
