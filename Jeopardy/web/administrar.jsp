@@ -12,8 +12,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Administración de Pistas</title>
-        <link rel="StyleSheet" type="text/css" href="administrar.css"/>
-        <script src="administrar.js"></script>
+        <link rel="StyleSheet" type="text/css" href="css/administrar.css"/>
+        <script src="scripts/administrar.js"></script>
         <%
             ArrayList<Materia> materias = (ArrayList<Materia>) request.getAttribute("materias");
         %>

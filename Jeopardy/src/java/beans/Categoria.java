@@ -15,6 +15,9 @@ public class Categoria {
     int id;
     String nombre;
     int materiaID;
+    ArrayList<ArrayList<Pista>> pistas;
+    
+    
 
     public Categoria(int id, String nombre, int materiaID) {
         this.id = id;
@@ -45,6 +48,24 @@ public class Categoria {
     public void setMateriaID(int materiaID) {
         this.materiaID = materiaID;
     }
+
+    public ArrayList<ArrayList<Pista>> getPistas() {
+        return pistas;
+    }
+
+    public void setPistas(ArrayList<ArrayList<Pista>> pistas) {
+        this.pistas = pistas;
+    }
+    
+    
+
+    
+
+    
+
+    
+    
+    
     
     
     

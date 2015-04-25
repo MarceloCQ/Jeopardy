@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <script src="cambioContrasena.js"></script>
+        <script src="scripts/cambioContrasena.js"></script>
         <%
             //Se saca el mensaje si es que lo hay
             String mensaje = "";
