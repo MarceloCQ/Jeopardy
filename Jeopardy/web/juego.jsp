@@ -29,10 +29,24 @@
                 <div id="header">
                     <h1 align="center"><%= materia.getNombre()%></h1>
                 </div>
-                <div  style="display: table-cell;" id="divPregunta">
-                    <h1 style="display: table-cell; vertical-align: central; text-align: center">Hola</h1>
+                <div style="display: none" id="interfazPreg">
+                    <div align="center" id="btnverpreg"><br><input onclick="verPregunta()" style="width: 200px; height: 50px; font-size: 20px" type="button" value="Ver Pregunta" /><br></div>   
+                    <div align="center" id="divRespuesta" style="display:none">
+
+                    </div>
+                    <br>
+                    <div align="center" id="divPregunta">
+
+                    </div>
+
+                    <div style="display:none" id="bienomal" align="center"><br><br>
+                        <img onclick=" preguntaCorrecta()" height="100px" style="margin: 30px" width="100px" src="checkmark.png">
+                        <img onclick="preguntaIncorrecta()" style="margin: 30px" height="100px" width="100px" src="crossmark.png">
+                    </div>
+
+
                 </div>
-                <div id="preguntas" style="display:none">
+                <div id="preguntas">
                     <table border="1">
                         <tr>
                             <%
@@ -44,7 +58,7 @@
                         <% for (int i = 100; i <= 500; i += 100) {%>
                         <tr>
                             <% for (int p = 0; p < 6; p++) {%>
-                            <td id="<%= categorias.get(p).getPistas().get(0).get(i / 100 - 1).getId()%>" onclick="opSelecc(this)"><%=i%></td>
+                            <td class="nousada" id="<%= categorias.get(p).getPistas().get(0).get(i / 100 - 1).getId()%>" onclick="opSelecc(this)"><%=i%></td>
                             <% }%>
                         </tr>
                         <% }%>

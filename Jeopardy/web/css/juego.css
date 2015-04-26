@@ -65,7 +65,7 @@ th{
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
-td{
+td.nousada{
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     font-size: 80px;
     color:  #cc9933;
@@ -73,9 +73,17 @@ td{
     
 }
 
-td:hover {
+.nousada:hover {
     color:  white;
     cursor: pointer;
+}
+
+td.usada {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 80px;
+    color:  grey;
+    height: 18%;
+    
 }
 
 h1 {
@@ -83,5 +91,38 @@ h1 {
     font-size: 40px;
     
 }
+
+p {
+   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 60px;
+    color: #cc9933;
+}
+
+#divPregunta{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 65px;
+    color: #cc9933;
+    
+      
+}
+
+#divRespuesta{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 65px;
+    color: white;
+    
+      
+}
+
+#interfazPreg{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    
+    background: #003366;
+   
+  
+}
+
 
 
