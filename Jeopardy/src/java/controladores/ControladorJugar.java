@@ -113,8 +113,13 @@ public class ControladorJugar extends HttpServlet {
             }
             
             case "jugadoresSelecc": {
-                String[] jugadores = request.getParameterValues("jugador");
+                String[] jugadores = request.getParameterValues("jugador");               
                 request.getSession().setAttribute("jugadores", jugadores);
+                ArrayList<Integer> scores = new ArrayList<Integer>();
+                for (String s : jugadores){
+                    scores.add(0);
+                }
+                request.getSession().setAttribute("scores", scores);
                 url = "/juego.jsp";
                 break;
                 
@@ -126,6 +131,51 @@ public class ControladorJugar extends HttpServlet {
                 url = "/seleccionarJugadores.jsp";
                 break;
             }
+            case "juegoTerminado": {
+                String[] jugadores = (String[])request.getSession().getAttribute("jugadores");
+                ArrayList<Integer> scores = (ArrayList<Integer>)request.getSession().getAttribute("scores");
+                Perfil p = (Perfil)request.getSession().getAttribute("perfil");
+                
+                request.setAttribute("jugadores", jugadores);
+                request.setAttribute("scores", scores);
+                request.setAttribute("perfil", p);
+                
+                request.getSession().removeAttribute("jugadores");
+                request.getSession().removeAttribute("scores");
+                request.getSession().removeAttribute("perfil");
+                
+                int id = DBHandler.agregarJuego(jugadores, scores, p.getId());
+                request.setAttribute("juego", DBHandler.obtenerJuego(id));
+                url = "/resumenJuego.jsp";
+                break;
+                
+                
+            }
+            
+            case "historial": {
+                ArrayList<Juego> juegos = DBHandler.getJuegos();
+                request.setAttribute("juegos", juegos);
+                url = "/seleccionarJuego.jsp";
+                break;
+            }
+            
+            case "juegoSelecc": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                Juego j = DBHandler.obtenerJuego(id);
+                Perfil p = DBHandler.obtenerPerfil(j.getIdPerfil());
+                
+                String[] jugadores = DBHandler.obtenerJugadores(j.getId());
+                ArrayList<Integer> scores = DBHandler.obtenerPuntuaciones(j.getId());
+                
+                
+                request.setAttribute("jugadores", jugadores);
+                request.setAttribute("scores", scores);
+                request.setAttribute("perfil", p);
+                request.setAttribute("juego", j);
+                url = "/resumenJuego.jsp";
+                break;
+            }
+            
 
         }
 

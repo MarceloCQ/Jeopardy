@@ -14,7 +14,8 @@
     </head>
     <body>
         <h1>Jeopardy</h1>
-        <a href="ControladorAdministrar?operacion=inicializacion">Administrar</a>
-        <a href="ControladorJugar?operacion=inicio">Jugar</a>
+        <a href="ControladorAdministrar?operacion=inicializacion">Administrar</a><br>
+        <a href="ControladorJugar?operacion=inicio">Jugar</a><br>
+        <a href="ControladorJugar?operacion=historial">Historial de Juegos</a><br>
     </body>
 </html>

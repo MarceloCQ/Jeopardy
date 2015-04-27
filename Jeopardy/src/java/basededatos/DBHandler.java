@@ -6,6 +6,7 @@
 package basededatos;
 
 import beans.Categoria;
+import beans.Juego;
 import beans.Materia;
 import beans.Perfil;
 import beans.Pista;
@@ -496,5 +497,124 @@ public class DBHandler {
 
         return perfil;
     }
+
+    public static int agregarJuego(String[] nombres, ArrayList<Integer> puntuaciones, int idperfil) {
+        int nuevoId = 0;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO juego (fecha, idperfil) VALUES (now(), " + idperfil + ")");
+
+            ResultSet keyResultSet = statement.getGeneratedKeys();
+           
+            if (keyResultSet.next()) {
+                nuevoId = (int) keyResultSet.getInt(1);
+
+            }
+
+            for (int i = 0; i < nombres.length; i++) {
+                statement.executeUpdate("INSERT INTO juego_jugador (nombre, puntos, idjuego) VALUES ('" + nombres[i] + "', " + puntuaciones.get(i) + ", " + nuevoId + ")");
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return nuevoId;
+        
+    }
+
+    public static ArrayList<Juego> getJuegos() {
+        ArrayList<Juego> juegos = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+
+            query = "SELECT * FROM juego ORDER BY fecha ASC";
+
+            results = statement.executeQuery(query);
+
+            while (results.next()) {
+                juegos.add(new Juego(results.getInt(1), results.getTimestamp(2), results.getInt(3)));
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return juegos;
+    }
+    
+    public static Juego obtenerJuego(int id) {
+        Juego juego = null;
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+
+            query = "SELECT * FROM juego WHERE id = " + id + " ORDER BY fecha ASC";
+
+            results = statement.executeQuery(query);
+
+            if (results.next()) {
+                juego = new Juego(results.getInt(1), results.getTimestamp(2), results.getInt(3));
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return juego;
+    }
+    
+    public static String[] obtenerJugadores(int id){
+        ArrayList<String> jugadores = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+
+            query = "SELECT * FROM juego_jugador WHERE idjuego = "+ id + " ORDER BY nombre ASC";
+
+            results = statement.executeQuery(query);
+            while (results.next()) {
+                jugadores.add(results.getString(2));
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String []aux = new String[jugadores.size()];
+        return jugadores.toArray(aux);
+    }
+    
+    public static ArrayList<Integer> obtenerPuntuaciones(int id){
+        ArrayList<Integer> puntuaciones = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+
+            query = "SELECT * FROM juego_jugador WHERE idjuego = "+ id + " ORDER BY nombre ASC";
+
+            results = statement.executeQuery(query);
+            while (results.next()) {
+                puntuaciones.add(results.getInt(3));
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return puntuaciones;
+    }
+    
+    
 
 }

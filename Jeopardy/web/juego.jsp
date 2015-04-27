@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div id="score" class='score'>
+            <div id="score" align="center" class='score'>
                 <h1 align="center">Score</h1>
                 <table style='background: none;'>
                     <% for (int i = 0; i < jugadores.length; i++) {%>
@@ -86,7 +86,11 @@
                         <td name='<%=i%>' style="border: 2px solid black;">0</td>
                     </tr>
                     <% }%>
-                </table>
+                </table><br>
+                <form onsubmit="return confirm('¿Seguro que quieres terminar el juego?')" method="POST" action="ControladorJugar?operacion=juegoTerminado">
+                    <input type="submit" value="Terminar Juego" />
+                </form>
+                
             </div>
         </div>
     </body>

@@ -45,16 +45,20 @@ function preguntaCorrecta(){
     document.getElementById("btnverpreg").style.display = "block";
     document.getElementById("bienomal").style.display = "none";
     
-    var ind = document.getElementById("quiencontesto").selectedIndex;
-    var td = document.getElementsByName(ind)[0];
-    var puntos = parseInt(td.innerHTML) + parseInt(tdPreguntaSeleccionada.innerHTML); 
-    td.innerHTML = puntos;
+    var id = document.getElementById("quiencontesto").selectedIndex;
+    var puntos = parseInt(tdPreguntaSeleccionada.innerHTML);
     
-     tdPreguntaSeleccionada.innerHTML = "";
+    var url = "ControladorAdministrar?operacion=obtenerScore&id=" + id + "&puntos=" + puntos;
     
+    tdPreguntaSeleccionada.innerHTML = "";
     
-    
+    req = new XMLHttpRequest();
+    req.onload = puntosObtenidos;
+    req.open("GET", url, true);
+    req.send();
+       
 }
+
 
 function preguntaIncorrecta(){
     tdPreguntaSeleccionada.className = "usada";
@@ -65,5 +69,14 @@ function preguntaIncorrecta(){
     document.getElementById("divRespuesta").style.display = "none";
     document.getElementById("btnverpreg").style.display = "block";
     document.getElementById("bienomal").style.display = "none";
+    
+}
+
+function puntosObtenidos(){
+    datos = req.responseXML;
+    var ind = document.getElementById("quiencontesto").selectedIndex;
+    var puntos = datos.getElementsByTagName("Puntos")[0].textContent;
+    var td = document.getElementsByName(ind)[0];
+    td.innerHTML = puntos;
     
 }

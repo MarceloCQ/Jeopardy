@@ -38,10 +38,10 @@ public class ControladorAdministrar extends HttpServlet {
         }
 
         respuesta += "</Materias>";
-        
+
         return respuesta;
     }
-    
+
     private String obtenerCategoriasenXML(String hint, int id) {
         String respuesta = "";
 
@@ -55,11 +55,10 @@ public class ControladorAdministrar extends HttpServlet {
         }
 
         respuesta += "</Categorias>";
-        
-        
+
         return respuesta;
     }
-    
+
     private String obtenerPreguntasenXML(String hint, int id) {
         String respuesta = "";
 
@@ -73,11 +72,9 @@ public class ControladorAdministrar extends HttpServlet {
         }
 
         respuesta += "</Preguntas>";
-        
-        
+
         return respuesta;
     }
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -105,146 +102,148 @@ public class ControladorAdministrar extends HttpServlet {
                 RequestDispatcher rd = sc.getRequestDispatcher(url);
                 rd.forward(request, response);
                 break;
-            case "buscar":
-                {
-                    String hint = request.getParameter("hint");
-                    String respuesta = obtenerMateriasenXML(hint);
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "agregar":
-                {
-                    String nombre = request.getParameter("materiaNombre");
-                    DBHandler.agregarMateria(nombre);
-                    String respuesta = obtenerMateriasenXML("");
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "eliminar":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    DBHandler.eliminarMateria(id);
-                    String respuesta = obtenerMateriasenXML("");
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "editarMateria":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    String nombre = request.getParameter("nombre");
-                    DBHandler.editarMateria(id, nombre);
-                    break;
-                }
-            case "buscarCategorias":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    String hint = request.getParameter("hint");
-                    String respuesta = obtenerCategoriasenXML(hint, id);
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "agregarCategoria":
-                {
-                    int idMateria = Integer.parseInt(request.getParameter("idMateria"));
-                    String nombre = request.getParameter("nombre");
-                    DBHandler.agregarCategoria(nombre, idMateria);
-                    String respuesta = obtenerCategoriasenXML("", idMateria);
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "editarCategoria":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    int idMateria = Integer.parseInt(request.getParameter("idMateria"));
-                    String nombre = request.getParameter("nombre");
-                    DBHandler.editarCategoria(id, nombre);
-                    String respuesta = obtenerCategoriasenXML(nombre, idMateria);
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "eliminarCategoria":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    int idMateria = Integer.parseInt(request.getParameter("idMateria"));
-                    DBHandler.eliminarCategoria(id);
-                    String respuesta = obtenerCategoriasenXML("", idMateria);
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "agregarPregunta":
-                {
-                    String pregunta = request.getParameter("pregunta");
-                    String respuesta = request.getParameter("respuesta");
-                    int puntos = Integer.parseInt(request.getParameter("puntos"));
-                    int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
-                    DBHandler.agregarPregunta(pregunta, respuesta, puntos, idCategoria);
-                    String respuesta2 = obtenerPreguntasenXML("", idCategoria);
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta2);       // Write response body.
-                    break;
-                }
-            case "buscarPreguntas":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    String hint = request.getParameter("hint");
-                    String respuesta = obtenerPreguntasenXML(hint, id);
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "obtenerPregunta":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    String respuesta = "";
-                    Pista pista = DBHandler.obtenerPista(id);
-                    respuesta += "<?xml version='1.0' encoding='ISO-8859-1'?><Pista>";
-                    respuesta += "<Pregunta>" + pista.getPregunta() + "</Pregunta>";
-                    respuesta += "<Respuesta>" + pista.getPista() + "</Respuesta>";
-                    respuesta += "<Puntos>" + pista.getPuntos() + "</Puntos>";
-                    respuesta += "</Pista>";
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "eliminarPregunta":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
-                    DBHandler.eliminarPista(id);
-                    String respuesta = obtenerPreguntasenXML("", idCategoria);
-                    response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
-                    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-                    response.getWriter().write(respuesta);       // Write response body.
-                    break;
-                }
-            case "editarPregunta":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    String pregunta = request.getParameter("pregunta");
-                    String respuesta = request.getParameter("respuesta");
-                    int puntos = Integer.parseInt(request.getParameter("puntos"));
-                    DBHandler.editarPista(id, pregunta, respuesta, puntos);
-                    break;
-                }
+            case "buscar": {
+                String hint = request.getParameter("hint");
+                String respuesta = obtenerMateriasenXML(hint);
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "agregar": {
+                String nombre = request.getParameter("materiaNombre");
+                DBHandler.agregarMateria(nombre);
+                String respuesta = obtenerMateriasenXML("");
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "eliminar": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                DBHandler.eliminarMateria(id);
+                String respuesta = obtenerMateriasenXML("");
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "editarMateria": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String nombre = request.getParameter("nombre");
+                DBHandler.editarMateria(id, nombre);
+                break;
+            }
+            case "buscarCategorias": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String hint = request.getParameter("hint");
+                String respuesta = obtenerCategoriasenXML(hint, id);
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "agregarCategoria": {
+                int idMateria = Integer.parseInt(request.getParameter("idMateria"));
+                String nombre = request.getParameter("nombre");
+                DBHandler.agregarCategoria(nombre, idMateria);
+                String respuesta = obtenerCategoriasenXML("", idMateria);
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "editarCategoria": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                int idMateria = Integer.parseInt(request.getParameter("idMateria"));
+                String nombre = request.getParameter("nombre");
+                DBHandler.editarCategoria(id, nombre);
+                String respuesta = obtenerCategoriasenXML(nombre, idMateria);
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "eliminarCategoria": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                int idMateria = Integer.parseInt(request.getParameter("idMateria"));
+                DBHandler.eliminarCategoria(id);
+                String respuesta = obtenerCategoriasenXML("", idMateria);
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "agregarPregunta": {
+                String pregunta = request.getParameter("pregunta");
+                String respuesta = request.getParameter("respuesta");
+                int puntos = Integer.parseInt(request.getParameter("puntos"));
+                int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
+                DBHandler.agregarPregunta(pregunta, respuesta, puntos, idCategoria);
+                String respuesta2 = obtenerPreguntasenXML("", idCategoria);
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta2);       // Write response body.
+                break;
+            }
+            case "buscarPreguntas": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String hint = request.getParameter("hint");
+                String respuesta = obtenerPreguntasenXML(hint, id);
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "obtenerPregunta": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String respuesta = "";
+                Pista pista = DBHandler.obtenerPista(id);
+                respuesta += "<?xml version='1.0' encoding='ISO-8859-1'?><Pista>";
+                respuesta += "<Pregunta>" + pista.getPregunta() + "</Pregunta>";
+                respuesta += "<Respuesta>" + pista.getPista() + "</Respuesta>";
+                respuesta += "<Puntos>" + pista.getPuntos() + "</Puntos>";
+                respuesta += "</Pista>";
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "eliminarPregunta": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
+                DBHandler.eliminarPista(id);
+                String respuesta = obtenerPreguntasenXML("", idCategoria);
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+                break;
+            }
+            case "editarPregunta": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String pregunta = request.getParameter("pregunta");
+                String respuesta = request.getParameter("respuesta");
+                int puntos = Integer.parseInt(request.getParameter("puntos"));
+                DBHandler.editarPista(id, pregunta, respuesta, puntos);
+                break;
+            }
+            case "obtenerScore": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                int puntos = Integer.parseInt(request.getParameter("puntos"));
+                ArrayList<Integer> scores = (ArrayList<Integer>) request.getSession().getAttribute("scores");
+                scores.set(id, scores.get(id) + puntos);
+                request.getSession().setAttribute("scores", scores);
+
+                String respuesta = "";
+                respuesta += "<?xml version='1.0' encoding='ISO-8859-1'?><Puntuacion>";
+                respuesta += "<Puntos>" + scores.get(id) + "</Puntos>";
+                respuesta += "</Puntuacion>";
+                response.setContentType("text/xml");  // Set content type of the response so that jQuery knows what it can expect.
+                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+                response.getWriter().write(respuesta);       // Write response body.
+
+            }
         }
-        
 
     }
 
