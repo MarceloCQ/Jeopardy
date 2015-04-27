@@ -16,6 +16,7 @@
         <link rel="StyleSheet" type="text/css" href="css/juego.css"/>
         <%
             Perfil perfil = (Perfil) session.getAttribute("perfil");
+            String[] jugadores = (String[]) session.getAttribute("jugadores");
             Materia materia = perfil.getMateria();
             ArrayList<Categoria> categorias = perfil.getCategorias();
 
@@ -40,8 +41,18 @@
                     </div>
 
                     <div style="display:none" id="bienomal" align="center"><br><br>
+                        <p>¿Quién contestó?</p>
+                        <select id='quiencontesto'>
+                            <% for (String s : jugadores) {%>
+                            <option><%=s%></option>
+                            <% } %>
+                        </select><br>
+                        <p>¿Como contestó?</p>
+
                         <img onclick=" preguntaCorrecta()" height="100px" style="margin: 30px" width="100px" src="checkmark.png">
                         <img onclick="preguntaIncorrecta()" style="margin: 30px" height="100px" width="100px" src="crossmark.png">
+
+
                     </div>
 
 
@@ -66,8 +77,16 @@
                 </div>
             </div>
 
-            <div id="score">
+            <div id="score" class='score'>
                 <h1 align="center">Score</h1>
+                <table style='background: none;'>
+                    <% for (int i = 0; i < jugadores.length; i++) {%>
+                    <tr>
+                        <td style="border: 2px solid black;"><%=jugadores[i]%></td>
+                        <td name='<%=i%>' style="border: 2px solid black;">0</td>
+                    </tr>
+                    <% }%>
+                </table>
             </div>
         </div>
     </body>

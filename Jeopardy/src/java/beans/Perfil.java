@@ -12,14 +12,21 @@ import java.util.ArrayList;
  * @author Marcelo
  */
 public class Perfil {
+    int id;
     String nombre;
     Materia materia;
     ArrayList<Categoria> categorias;
 
-    public Perfil(String nombre, Materia materia, ArrayList<Categoria> categorias) {
+    public Perfil(int id, String nombre, Materia materia, ArrayList<Categoria> categorias) {
         this.nombre = nombre;
         this.materia = materia;
         this.categorias = categorias;
+        this.id = id;
+    }
+    
+    public Perfil(int id, String nombre){
+        this.id = id;
+        this.nombre = nombre;
     }
 
     
@@ -46,6 +53,16 @@ public class Perfil {
     public void setCategorias(ArrayList<Categoria> categorias) {
         this.categorias = categorias;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     
     
     

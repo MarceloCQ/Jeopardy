@@ -15,12 +15,14 @@
             ArrayList<Materia> materias = (ArrayList<Materia>) request.getAttribute("materias");
         %>
 
-        <title>JSP Page</title>
+        <title>Crear Perfil</title>
     </head>
     <body>
-        <h1>Seleccionar materias</h1>
-        Porfavor seleccionar una materia: <br><br>
+        <h1>Crear Perfil</h1>
+        
         <form action="ControladorJugar?operacion=matSelecc" method="POST">
+            Nombre del perfil: <br><input type="text" name="nombrePerfil" value="" /><br><br>
+            Materia a jugar: <br>
             <select name="materia">
                 <%
                     for (int i = 0; i < materias.size(); i++) {
@@ -29,7 +31,7 @@
                 <%
                     }
                 %>
-            </select>
+            </select><br><br>
             <input type="submit" value="Siguiente" />
         </form>
 

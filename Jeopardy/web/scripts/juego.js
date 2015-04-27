@@ -6,6 +6,7 @@
 
 
 var tdPreguntaSeleccionada;
+var puntos;
 
 function opSelecc(obj){
     var id = obj.id;
@@ -37,12 +38,22 @@ function verPregunta(){
 function preguntaCorrecta(){
     tdPreguntaSeleccionada.className = "usada";
     tdPreguntaSeleccionada.onclick = null;
-    tdPreguntaSeleccionada.innerHTML = "";
+    
     document.getElementById("interfazPreg").style.display = "none";
     document.getElementById("preguntas").style.display = "block";
     document.getElementById("divRespuesta").style.display = "none";
     document.getElementById("btnverpreg").style.display = "block";
     document.getElementById("bienomal").style.display = "none";
+    
+    var ind = document.getElementById("quiencontesto").selectedIndex;
+    var td = document.getElementsByName(ind)[0];
+    var puntos = parseInt(td.innerHTML) + parseInt(tdPreguntaSeleccionada.innerHTML); 
+    td.innerHTML = puntos;
+    
+     tdPreguntaSeleccionada.innerHTML = "";
+    
+    
+    
 }
 
 function preguntaIncorrecta(){

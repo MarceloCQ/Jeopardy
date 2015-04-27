@@ -7,6 +7,7 @@ package basededatos;
 
 import beans.Categoria;
 import beans.Materia;
+import beans.Perfil;
 import beans.Pista;
 import beans.Usuario;
 import java.sql.Connection;
@@ -209,7 +210,7 @@ public class DBHandler {
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static Materia obtenerMateria(int id) {
         Materia materia = null;
         try {
@@ -322,7 +323,7 @@ public class DBHandler {
             String query;
             ResultSet results;
 
-            query = "SELECT * FROM pistas WHERE idCategoria = " + id + " and puntos = "+ puntos +" ORDER BY pregunta ASC";
+            query = "SELECT * FROM pistas WHERE idCategoria = " + id + " and puntos = " + puntos + " ORDER BY pregunta ASC";
 
             results = statement.executeQuery(query);
 
@@ -403,6 +404,97 @@ public class DBHandler {
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return categoria;
+    }
+
+    public static void agregarPerfil(Perfil perfil) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO perfil (nombre) VALUES ('" + perfil.getNombre() + "')");
+
+            ResultSet keyResultSet = statement.getGeneratedKeys();
+            int nuevoId = 0;
+            if (keyResultSet.next()) {
+                nuevoId = (int) keyResultSet.getInt(1);
+            }
+
+            for (Categoria c : perfil.getCategorias()) {
+                statement.executeUpdate("INSERT INTO perfil_categoria (idperfil, idcategoria) VALUES (" + nuevoId + ", " + c.getId() + ")");
+                for (Pista p : c.getPistas().get(0)) {
+                    statement.executeUpdate("INSERT INTO perfil_pista (idperfil, idpista) VALUES (" + nuevoId + ", " + p.getId() + ")");
+                }
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static ArrayList<Perfil> getPerfiles() {
+        ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+
+            query = "SELECT * FROM perfil ORDER BY nombre ASC";
+
+            results = statement.executeQuery(query);
+
+            while (results.next()) {
+                perfiles.add(new Perfil(results.getInt(1), results.getString(2)));
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return perfiles;
+    }
+
+    public static Perfil obtenerPerfil(int id) {
+        Perfil perfil = null;
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            ResultSet results;
+
+            query = "SELECT * FROM perfil WHERE id = " + id + " ORDER BY nombre ASC";
+
+            results = statement.executeQuery(query);
+
+            if (results.next()) {
+                String nombre = results.getString(2);
+                ArrayList<Categoria> categorias = new ArrayList<>();
+
+                ResultSet resultsCategorias = connection.createStatement().executeQuery("SELECT * FROM perfil_categoria WHERE idperfil = " + id);
+                while (resultsCategorias.next()) {
+                    Categoria cat = obtenerCategoria(resultsCategorias.getInt(2));
+                    ArrayList<ArrayList<Pista>> pistas = new ArrayList<>();
+                    ArrayList<Pista> pistasAux = new ArrayList<>();
+                    ResultSet resultsP = connection.createStatement().executeQuery("SELECT idpista FROM perfil_pista, pistas WHERE perfil_pista.idpista = pistas.id and idperfil = " + id + " and idCategoria = " + cat.getId());
+                    while (resultsP.next()) {
+                        pistasAux.add(obtenerPista(resultsP.getInt(1)));
+                    }
+
+                    pistas.add(pistasAux);
+                    cat.setPistas(pistas);
+                    categorias.add(cat);
+
+                }
+
+                perfil = new Perfil(id, nombre, DBHandler.obtenerMateria(categorias.get(0).getMateriaID()), categorias);
+
+            }
+
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return perfil;
     }
 
 }
