@@ -47,4 +47,6 @@
                 </tr>
                 <% } %>
             </table>
+            <br><br><br>
+                <a href="inicio.jsp">[Regresar a Inicio]</a>
 </html>

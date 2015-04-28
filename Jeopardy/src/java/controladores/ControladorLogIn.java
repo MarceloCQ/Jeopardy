@@ -117,6 +117,9 @@ public class ControladorLogIn extends HttpServlet {
                 request.setAttribute("mensaje", "Contraseña incorrecta");
                 url = "/cambioContrasena.jsp";
             }
+        } else if (op.equals("cerrarSesion")){
+            request.getSession().removeAttribute("user");
+            url = "/login.jsp";
         }
         
         //Se redirecciona la pagina a la correcta

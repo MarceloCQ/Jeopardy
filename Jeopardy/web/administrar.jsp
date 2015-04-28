@@ -10,6 +10,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            if (session.getAttribute("user") == null) { %>
+                <jsp:forward page="login.jsp" />                
+        <%  } 
+            if (request.getAttribute("materias") == null){ %>
+                 <jsp:forward page="inicio.jsp" /> 
+         <%   } %>
+        
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Administración de Pistas</title>
         <link rel="StyleSheet" type="text/css" href="css/administrar.css"/>
@@ -129,5 +138,7 @@
             </div>
 
         </div>
+                <br><br><br>
+                <a href="inicio.jsp">[Regresar a Inicio]</a>
 
 </html>

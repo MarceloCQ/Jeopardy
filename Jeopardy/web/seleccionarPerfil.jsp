@@ -10,7 +10,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <%
+            if (session.getAttribute("user") == null) { %>
+                <jsp:forward page="login.jsp" />                
+        <%  } 
+            if (request.getAttribute("perfiles") == null){ %>
+                 <jsp:forward page="inicio.jsp" /> 
+         <%   } %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
            ArrayList<Perfil> perfiles = (ArrayList<Perfil>) request.getAttribute("perfiles");

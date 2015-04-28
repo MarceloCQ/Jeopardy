@@ -10,6 +10,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            if (session.getAttribute("user") == null) { %>
+                <jsp:forward page="login.jsp" />                
+        <%  } 
+            if (request.getAttribute("juegos") == null){ %>
+                 <jsp:forward page="inicio.jsp" /> 
+         <%   } %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
             ArrayList<Juego> juegos = (ArrayList<Juego>) request.getAttribute("juegos");

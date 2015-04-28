@@ -14,9 +14,9 @@
     </head>
     <body>
         <h1>Seleccionar Jugadores</h1>
-        <form action="ControladorJugar?operacion=jugadoresSelecc" method="POST">
+        <form onsubmit="return validarForma()" action="ControladorJugar?operacion=jugadoresSelecc" method="POST">
             <div id="jugadores">
-                <span>Jugador #1: </span><input type="text" name="jugador" value="" /><br><br>
+                <span>Jugador #1: </span><input type="text" name="jugador" /><br><br>
             </div>
             <input type="button" onclick="nuevoJugador()" value="+" />
             <input type="submit" value="Jugar" />

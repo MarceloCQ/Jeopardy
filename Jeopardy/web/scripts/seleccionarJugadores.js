@@ -17,7 +17,30 @@ function nuevoJugador(){
     
     div.appendChild(label);
     div.appendChild(input);
-    div.innerHTML += "<br><br>";
+    div.appendChild(document.createElement("br"));
+    div.appendChild(document.createElement("br"));
+    
+    
+}
+
+function validarForma(){
+    var elementos = document.getElementsByName("jugador");
+    var correcto = true;
+    for (var i = 0; i < elementos.length; i++){
+        if (elementos[i].value == ""){
+            correcto = false;
+        }
+    }
+    
+    if (!correcto){
+        alert("Favor de llenar todas las casillas");
+        return false;
+    }
+    else{
+        return true;
+    }
+    
+    
     
 }
 
