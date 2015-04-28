@@ -407,21 +407,21 @@ public class DBHandler {
         return categoria;
     }
 
-    public static void agregarPerfil(Perfil perfil) {
+    public static int agregarPerfil(Perfil perfil) {
+        Integer nuevoId = null;
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO perfil (nombre) VALUES ('" + perfil.getNombre() + "')");
+            statement.executeUpdate("INSERT INTO perfil (nombre) VALUES ('" + perfil.getNombre() + "')", Statement.RETURN_GENERATED_KEYS);
 
             ResultSet keyResultSet = statement.getGeneratedKeys();
-            int nuevoId = 0;
             if (keyResultSet.next()) {
                 nuevoId = (int) keyResultSet.getInt(1);
             }
 
             for (Categoria c : perfil.getCategorias()) {
-                statement.executeUpdate("INSERT INTO perfil_categoria (idperfil, idcategoria) VALUES (" + nuevoId + ", " + c.getId() + ")");
+                connection.createStatement().executeUpdate("INSERT INTO perfil_categoria (idperfil, idcategoria) VALUES (" + nuevoId + ", " + c.getId() + ")");
                 for (Pista p : c.getPistas().get(0)) {
-                    statement.executeUpdate("INSERT INTO perfil_pista (idperfil, idpista) VALUES (" + nuevoId + ", " + p.getId() + ")");
+                    connection.createStatement().executeUpdate("INSERT INTO perfil_pista (idperfil, idpista) VALUES (" + nuevoId + ", " + p.getId() + ")");
                 }
             }
 
@@ -429,6 +429,8 @@ public class DBHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return nuevoId;
 
     }
 
@@ -499,10 +501,10 @@ public class DBHandler {
     }
 
     public static int agregarJuego(String[] nombres, ArrayList<Integer> puntuaciones, int idperfil) {
-        int nuevoId = 0;
+        Integer nuevoId = null;
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO juego (fecha, idperfil) VALUES (now(), " + idperfil + ")");
+            statement.executeUpdate("INSERT INTO juego (fecha, idperfil) VALUES (now(), " + idperfil + ")", Statement.RETURN_GENERATED_KEYS);
 
             ResultSet keyResultSet = statement.getGeneratedKeys();
            
@@ -512,7 +514,7 @@ public class DBHandler {
             }
 
             for (int i = 0; i < nombres.length; i++) {
-                statement.executeUpdate("INSERT INTO juego_jugador (nombre, puntos, idjuego) VALUES ('" + nombres[i] + "', " + puntuaciones.get(i) + ", " + nuevoId + ")");
+                connection.createStatement().executeUpdate("INSERT INTO juego_jugador (nombre, puntos, idjuego) VALUES ('" + nombres[i] + "', " + puntuaciones.get(i) + ", " + nuevoId + ")");
             }
 
             statement.close();

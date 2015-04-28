@@ -106,8 +106,10 @@ public class ControladorJugar extends HttpServlet {
                 }
                 Perfil perfil = new Perfil(0, nombre, materia, categorias);
                 HttpSession session = request.getSession();
+               
+                int id = DBHandler.agregarPerfil(perfil);
+                perfil.setId(id);
                 session.setAttribute("perfil", perfil);
-                DBHandler.agregarPerfil(perfil);
                 url = "/seleccionarJugadores.jsp";
                 break;
             }

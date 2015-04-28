@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2015 a las 01:04:09
+-- Tiempo de generación: 28-04-2015 a las 03:48:10
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -57,16 +57,14 @@ CREATE TABLE IF NOT EXISTS `juego` (
 `id` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
   `idperfil` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `juego`
 --
 
 INSERT INTO `juego` (`id`, `fecha`, `idperfil`) VALUES
-(2, '2015-04-27 16:53:58', 1),
-(3, '2015-04-27 17:23:15', 1),
-(4, '2015-04-27 17:27:45', 1);
+(1, '2015-04-27 20:47:19', 1);
 
 -- --------------------------------------------------------
 
@@ -79,23 +77,16 @@ CREATE TABLE IF NOT EXISTS `juego_jugador` (
   `nombre` varchar(30) NOT NULL,
   `puntos` int(11) NOT NULL,
   `idjuego` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `juego_jugador`
 --
 
 INSERT INTO `juego_jugador` (`id`, `nombre`, `puntos`, `idjuego`) VALUES
-(1, 'Marcelo', 200, 2),
-(2, 'Juan', 800, 2),
-(3, 'Juan Jose', 200, 3),
-(4, 'Marcelo Cantu', 600, 3),
-(5, 'Zyanya ValdÃ©s', 400, 3),
-(6, 'Eduardo Cristerna', 500, 3),
-(7, 'Marcelo Cantu', 700, 4),
-(8, 'Zyanya Valdes', 500, 4),
-(9, 'Eduardo Cristerna', 100, 4),
-(10, 'Juan Jose', 300, 4);
+(1, 'Marcelo Cantu', 300, 1),
+(2, 'Zyanya Valdes', 600, 1),
+(3, 'Eduardo Cristerna', 700, 1);
 
 -- --------------------------------------------------------
 
@@ -355,12 +346,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 -- AUTO_INCREMENT de la tabla `juego`
 --
 ALTER TABLE `juego`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `juego_jugador`
 --
 ALTER TABLE `juego_jugador`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `materias`
 --
