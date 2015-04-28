@@ -2,10 +2,10 @@
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2015 a las 03:48:10
--- Versión del servidor: 5.6.21
--- Versión de PHP: 5.6.3
+-- Host: localhost
+-- Generation Time: Apr 28, 2015 at 05:30 AM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,59 +17,69 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `jeopardy`
+-- Database: `jeopardy`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categorias`
+-- Table structure for table `categorias`
 --
 
 CREATE TABLE IF NOT EXISTS `categorias` (
 `id` int(11) NOT NULL,
   `nombre` varchar(25) NOT NULL,
   `idMateria` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `categorias`
+-- Dumping data for table `categorias`
 --
 
 INSERT INTO `categorias` (`id`, `nombre`, `idMateria`) VALUES
 (4, 'Historia de México', 4),
 (5, 'Historia del Mundo', 4),
 (10, 'Geometría', 11),
-(12, 'Historia de México', 12),
 (17, 'Algebra', 11),
 (18, 'Trignonometría', 11),
 (19, 'Matemáticas Financieras', 11),
 (20, 'Métodos Numéricos', 11),
-(21, 'Teoría de Números', 11);
+(21, 'Teoría de Números', 11),
+(22, 'Historia de Italia', 12),
+(23, 'Historia de Mexico', 12),
+(24, 'Historia China', 12),
+(25, 'Mitologia Griega', 12),
+(26, 'Mitologia Nórdica', 12),
+(27, 'Mitología Egipcia', 12);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `juego`
+-- Table structure for table `juego`
 --
 
 CREATE TABLE IF NOT EXISTS `juego` (
 `id` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
   `idperfil` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `juego`
+-- Dumping data for table `juego`
 --
 
 INSERT INTO `juego` (`id`, `fecha`, `idperfil`) VALUES
-(1, '2015-04-27 20:47:19', 1);
+(1, '2015-04-27 20:47:19', 1),
+(2, '2015-04-27 20:52:50', 2),
+(3, '2015-04-27 21:58:06', 3),
+(4, '2015-04-27 22:14:51', 3),
+(5, '2015-04-27 22:28:07', 4),
+(6, '2015-04-27 22:28:31', 4);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `juego_jugador`
+-- Table structure for table `juego_jugador`
 --
 
 CREATE TABLE IF NOT EXISTS `juego_jugador` (
@@ -77,30 +87,45 @@ CREATE TABLE IF NOT EXISTS `juego_jugador` (
   `nombre` varchar(30) NOT NULL,
   `puntos` int(11) NOT NULL,
   `idjuego` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `juego_jugador`
+-- Dumping data for table `juego_jugador`
 --
 
 INSERT INTO `juego_jugador` (`id`, `nombre`, `puntos`, `idjuego`) VALUES
 (1, 'Marcelo Cantu', 300, 1),
 (2, 'Zyanya Valdes', 600, 1),
-(3, 'Eduardo Cristerna', 700, 1);
+(3, 'Eduardo Cristerna', 700, 1),
+(4, '1', 200, 2),
+(5, '2', 400, 2),
+(6, '3', 300, 2),
+(7, 'Eduardo', 0, 3),
+(8, 'Zyanya', 0, 3),
+(9, 'Marcelo', 0, 3),
+(10, 'Eduardo', 0, 4),
+(11, 'Zyanya', 200, 4),
+(12, 'Marcelo', 0, 4),
+(13, 'Eduardo', 0, 5),
+(14, 'Zyanya', 0, 5),
+(15, 'Marcelo', 0, 5),
+(16, '1', 0, 6),
+(17, '2', 0, 6),
+(18, '3', 0, 6);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `materias`
+-- Table structure for table `materias`
 --
 
 CREATE TABLE IF NOT EXISTS `materias` (
 `id` int(11) NOT NULL,
   `nombre` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `materias`
+-- Dumping data for table `materias`
 --
 
 INSERT INTO `materias` (`id`, `nombre`) VALUES
@@ -108,30 +133,34 @@ INSERT INTO `materias` (`id`, `nombre`) VALUES
 (12, 'Historia'),
 (16, 'Computación'),
 (17, 'Español'),
-(19, 'Ética');
+(19, 'Ética'),
+(20, 'Idiomas');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `perfil`
+-- Table structure for table `perfil`
 --
 
 CREATE TABLE IF NOT EXISTS `perfil` (
 `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `perfil`
+-- Dumping data for table `perfil`
 --
 
 INSERT INTO `perfil` (`id`, `nombre`) VALUES
-(1, 'Grupo MaVi');
+(1, 'Grupo MaVi'),
+(2, 'historiadores'),
+(3, 'Prueba'),
+(4, 'Grupo MaVi 12:00');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `perfil_categoria`
+-- Table structure for table `perfil_categoria`
 --
 
 CREATE TABLE IF NOT EXISTS `perfil_categoria` (
@@ -140,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `perfil_categoria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `perfil_categoria`
+-- Dumping data for table `perfil_categoria`
 --
 
 INSERT INTO `perfil_categoria` (`idperfil`, `idcategoria`) VALUES
@@ -149,12 +178,30 @@ INSERT INTO `perfil_categoria` (`idperfil`, `idcategoria`) VALUES
 (1, 18),
 (1, 19),
 (1, 20),
-(1, 21);
+(1, 21),
+(2, 10),
+(2, 17),
+(2, 18),
+(2, 19),
+(2, 20),
+(2, 21),
+(3, 22),
+(3, 23),
+(3, 24),
+(3, 25),
+(3, 26),
+(3, 27),
+(4, 22),
+(4, 23),
+(4, 24),
+(4, 25),
+(4, 26),
+(4, 27);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `perfil_pista`
+-- Table structure for table `perfil_pista`
 --
 
 CREATE TABLE IF NOT EXISTS `perfil_pista` (
@@ -163,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `perfil_pista` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `perfil_pista`
+-- Dumping data for table `perfil_pista`
 --
 
 INSERT INTO `perfil_pista` (`idperfil`, `idpista`) VALUES
@@ -196,12 +243,102 @@ INSERT INTO `perfil_pista` (`idperfil`, `idpista`) VALUES
 (1, 31),
 (1, 32),
 (1, 33),
-(1, 34);
+(1, 34),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5),
+(2, 9),
+(2, 10),
+(2, 11),
+(2, 12),
+(2, 13),
+(2, 14),
+(2, 15),
+(2, 16),
+(2, 17),
+(2, 18),
+(2, 19),
+(2, 20),
+(2, 21),
+(2, 22),
+(2, 23),
+(2, 24),
+(2, 25),
+(2, 26),
+(2, 27),
+(2, 28),
+(2, 29),
+(2, 30),
+(2, 31),
+(2, 32),
+(2, 33),
+(2, 34),
+(3, 35),
+(3, 37),
+(3, 38),
+(3, 39),
+(3, 40),
+(3, 46),
+(3, 47),
+(3, 48),
+(3, 49),
+(3, 50),
+(3, 51),
+(3, 52),
+(3, 53),
+(3, 54),
+(3, 55),
+(3, 56),
+(3, 57),
+(3, 58),
+(3, 59),
+(3, 60),
+(3, 61),
+(3, 62),
+(3, 63),
+(3, 64),
+(3, 65),
+(3, 67),
+(3, 68),
+(3, 69),
+(3, 70),
+(3, 71),
+(4, 35),
+(4, 37),
+(4, 38),
+(4, 39),
+(4, 40),
+(4, 46),
+(4, 47),
+(4, 48),
+(4, 49),
+(4, 50),
+(4, 51),
+(4, 52),
+(4, 53),
+(4, 54),
+(4, 55),
+(4, 56),
+(4, 57),
+(4, 58),
+(4, 59),
+(4, 60),
+(4, 61),
+(4, 62),
+(4, 63),
+(4, 64),
+(4, 65),
+(4, 67),
+(4, 68),
+(4, 69),
+(4, 70),
+(4, 71);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pistas`
+-- Table structure for table `pistas`
 --
 
 CREATE TABLE IF NOT EXISTS `pistas` (
@@ -210,10 +347,10 @@ CREATE TABLE IF NOT EXISTS `pistas` (
   `pregunta` text NOT NULL,
   `puntos` int(11) NOT NULL,
   `idCategoria` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `pistas`
+-- Dumping data for table `pistas`
 --
 
 INSERT INTO `pistas` (`id`, `pista`, `pregunta`, `puntos`, `idCategoria`) VALUES
@@ -249,12 +386,48 @@ INSERT INTO `pistas` (`id`, `pista`, `pregunta`, `puntos`, `idCategoria`) VALUES
 (31, 'Prueba2', '¿Prueba2?', 200, 18),
 (32, 'Prueba3', '¿Prueba3?', 300, 18),
 (33, 'Prueba4', '¿Prueba4?', 400, 18),
-(34, 'Prueba5', '¿Prueba5?', 500, 18);
+(34, 'Prueba5', '¿Prueba5?', 500, 18),
+(35, 'Monstruo con serpientes en vez de cabello', '¿Quien es Medusa?', 100, 25),
+(37, 'Madre Tierra', '¿Quien es Gaia?', 200, 25),
+(38, 'Dios del oceano', '¿Quien es Poseidon?', 300, 25),
+(39, 'Dios del inframundo', '¿Quien es Hades?', 400, 25),
+(40, 'Perro de 3 cabezas que cuida el inframundo', '¿Quien es Cerbero?', 500, 25),
+(41, 'Primer presidente de Mexico', '¿Quien fue Guadalupe Victoria?', 100, 4),
+(42, 'Fecha en que se celebra el grito de Dolores', '¿Que se celebra 16 de Septiembre, 1810?', 200, 4),
+(43, 'Año de la revolucion mexicana', '¿Que es 1910?', 300, 4),
+(44, 'Presidente Actual de mexico', '¿Quien es Enrique Peña Nieto?', 400, 4),
+(45, 'Candidato a presidencia de Mexico asesinado en 1994', '¿Quien es Luis Donaldo Colosio?', 500, 4),
+(46, 'Lugar de nacimiento de movimiento Renacentista', '¿Que es Florencia?', 100, 22),
+(47, 'Artista responsable de la capilla Sixtina del Vaticano', '¿Quien es Michelangelo Buonarotti?', 200, 22),
+(48, 'Poderosa e Influyente familia entre cuyos miembros había 4 papas', '¿Quienes son los Medici?', 400, 22),
+(49, 'Dictador Italiano presidente de la Republica social Italiana durante la segunda guerra mundial', '¿Quien fue Benito Mussolini?', 500, 22),
+(50, 'Artista que pintó la Mona Lisa', '¿Quien es Leonardo Da Vinci?', 300, 22),
+(51, 'Dios del Trueno', '¿Quien es Thor?', 100, 26),
+(52, 'Rey nórdico padre los guerreros legendarios Ivar el Deshuesado y Björn Ragnarsson', 'Quien es Ragnar Lodbrok?', 200, 26),
+(53, 'Dios nórdico que sacrificó un ojo a cambio de sabiduría', '¿Quien es Odin?', 300, 26),
+(54, 'Dios timador descrito comunmente como "el origen de todo fraude"', '¿Quien es Loki?', 400, 26),
+(55, 'El arbol de la vida', '¿Que es Yggdrasil?', 500, 26),
+(56, 'Dios del Sol', '¿Quien es Ra?', 100, 27),
+(57, 'Dios de los muertos', '¿Quien es Anubis?', 200, 27),
+(58, 'Diosa con cabeza de gato', '¿Quien es Bastet?', 300, 27),
+(59, 'Dios con cabeza de halcón', '¿Quien es Horus?', 400, 27),
+(60, 'Dios que gobernaba el inframundo', '¿Quien es Osiris?', 500, 27),
+(61, 'La dinastía más larga de China', '¿Quienes son los Chou?', 100, 24),
+(62, 'Conquistó desde China hasta Korea y creó el imperio más grande en la historia', '¿Quien es Genghis Khan?', 200, 24),
+(63, 'Revolucionario Comunista quien fundó la República Popular China', '¿Quien es Mao Zedong?', 300, 24),
+(64, 'Ciudad más poblada de china', '¿Que es Shangai?', 400, 24),
+(65, 'Montaña más alta del mundo con una altura de 8848 metros sobre el nivel del mar', '¿Que es el monte Everest?', 500, 24),
+(66, 'Considerado el último gran pintor renacentista y apodado Jacopo Robusti.', '¿Quien es Tintoretto?', 300, 22),
+(67, 'Primer presidente de Mexico', '¿Quien fue Guadalupe Victoria?', 100, 23),
+(68, 'Fecha en que se celebra el grito de Dolores', '¿Que se celebra 16 de Septiembre, 1810?', 200, 23),
+(69, 'Año de la revolucion mexicana', '¿Que es 1910?', 300, 23),
+(70, 'Presidente Actual de mexico', '¿Quien es Enrique Peña Nieto?', 400, 23),
+(71, 'Candidato a presidencia de Mexico asesinado en 1994', '¿Quien es Luis Donaldo Colosio?', 500, 23);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -265,7 +438,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`usuario`, `contraseña`, `cambioContraseña`, `intentosFallidos`) VALUES
@@ -273,100 +446,101 @@ INSERT INTO `usuarios` (`usuario`, `contraseña`, `cambioContraseña`, `intentos
 ('Marcelo', 'pass', 0, 0),
 ('Marco', 'ydobsvwoy', 0, 0),
 ('Pedro', 'loco', 1, 0),
-('prueba', 'loca', 1, 0);
+('prueba', 'loca', 1, 0),
+('zyanya', '12345', 1, 0);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `categorias`
+-- Indexes for table `categorias`
 --
 ALTER TABLE `categorias`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `juego`
+-- Indexes for table `juego`
 --
 ALTER TABLE `juego`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `juego_jugador`
+-- Indexes for table `juego_jugador`
 --
 ALTER TABLE `juego_jugador`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `materias`
+-- Indexes for table `materias`
 --
 ALTER TABLE `materias`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `perfil`
+-- Indexes for table `perfil`
 --
 ALTER TABLE `perfil`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `perfil_categoria`
+-- Indexes for table `perfil_categoria`
 --
 ALTER TABLE `perfil_categoria`
  ADD PRIMARY KEY (`idperfil`,`idcategoria`);
 
 --
--- Indices de la tabla `perfil_pista`
+-- Indexes for table `perfil_pista`
 --
 ALTER TABLE `perfil_pista`
  ADD PRIMARY KEY (`idperfil`,`idpista`);
 
 --
--- Indices de la tabla `pistas`
+-- Indexes for table `pistas`
 --
 ALTER TABLE `pistas`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
  ADD PRIMARY KEY (`usuario`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `categorias`
+-- AUTO_INCREMENT for table `categorias`
 --
 ALTER TABLE `categorias`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
 --
--- AUTO_INCREMENT de la tabla `juego`
+-- AUTO_INCREMENT for table `juego`
 --
 ALTER TABLE `juego`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT de la tabla `juego_jugador`
+-- AUTO_INCREMENT for table `juego_jugador`
 --
 ALTER TABLE `juego_jugador`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
--- AUTO_INCREMENT de la tabla `materias`
+-- AUTO_INCREMENT for table `materias`
 --
 ALTER TABLE `materias`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
--- AUTO_INCREMENT de la tabla `perfil`
+-- AUTO_INCREMENT for table `perfil`
 --
 ALTER TABLE `perfil`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT de la tabla `pistas`
+-- AUTO_INCREMENT for table `pistas`
 --
 ALTER TABLE `pistas`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=72;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
