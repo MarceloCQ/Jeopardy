@@ -7,6 +7,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="beans.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id = "datos" scope= "session" class = "basededatos.DBHandler" />
 <!DOCTYPE html>
 <html>
     <head>
